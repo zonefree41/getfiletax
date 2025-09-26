@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Explore Our Tax Services</title>
+    <style>
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: url('https://images.unsplash.com/photo-1554224155-6726b3ff858f') no-repeat center center/cover;
+            min-height: 100vh;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Dark overlay for readability */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 0;
+        }
+
+        /* Fixed Navigation bar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px 0;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+        }
+
+        nav a {
+            color: #f8f8f8;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffdd57;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            padding: 30px;
+            margin: 120px auto 50px;
+            /* push content below fixed navbar */
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #f8f8f8;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.7;
+            color: #eaeaea;
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(6px);
+            transition: 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #ffdd57;
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: #f5f5f5;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 25px;
+            background: #ffdd57;
+            color: #333;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #ffc107;
+        }
+
+        footer {
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.8);
+            color: #f8f8f8;
+            text-align: center;
+            padding: 20px 10px;
+            margin-top: 40px;
+            border-top: 1px solid #444;
+        }
+
+        nav {
+            a {
+                display: inline-block;
+                padding: 10px 15px;
+                border-radius: 5px;
+                transition: background 0.3s;
+                background: darken(#0a4b9b, 5%);
+                color: #fff;
+                justify-content: right;
+            }
+
+            a:hover {
+                background: #0a4b9b;
+            }
+        }
+
+        .social-media {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+            color: #ffdd57;
+            background-color: #ffdd57;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Fixed Navigation -->
+    <nav>
+        <a href="/home">Home</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+    </nav>
+
+    <div class="container">
+        <h1>Explore Our Tax Preparation Services</h1>
+        <p>We are committed to maximizing your refund while ensuring full compliance with IRS regulations. Explore our
+            wide range of professional tax preparation services tailored to meet your needs.</p>
+
+        <div class="services">
+            <div class="card">
+                <h3>Personal Tax Returns</h3>
+                <p>Get your individual taxes done with accuracy and care, ensuring the best possible outcome for your
+                    refund.</p>
+            </div>
+
+            <div class="card">
+                <h3>Business Tax Filing</h3>
+                <p>We help small businesses and self-employed professionals file taxes smoothly and stay compliant.</p>
+            </div>
+
+            <div class="card">
+                <h3>Tax Planning</h3>
+                <p>Strategize your finances with our year-round tax planning services to minimize liabilities.</p>
+            </div>
+
+            <div class="card">
+                <h3>IRS Audit Assistance</h3>
+                <p>Our experts stand by your side in case of audits, providing full representation and support.</p>
+            </div>
+        </div>
+
+        <a href="/home" class="btn">Back to Home</a>
+    </div>
+</body>
+<footer>
+    <p>&copy; 2025 Tax-Prep Expert. All rights reserved.</p>
+    <p>Contact us at: <a href="mailto:info@taxprep.com" style="color: #ffdd57;">info@taxprep.com</a></p>
+</footer>
+
+</html>

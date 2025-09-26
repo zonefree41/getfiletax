@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book an Appointment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f4f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 60px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2b6777;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2b6777;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #52ab98;
+        }
+
+        footer {
+            margin-top: 40px;
+            background: #2b6777;
+            color: #fff;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+            font-size: 14px;
+        }
+
+        span.label {
+            font-weight: bold;
+            text-align: center
+        }
+
+        span.icon {
+            margin-left: 5px;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        span.years-experience {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        header {
+            background: #2b6777;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        header nav {
+            margin-top: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+            color: #52ab98;
+        }
+
+        nav ul li a.active {
+            font-weight: bold;
+        }
+
+        nav h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        li {
+            display: inline;
+            padding: 10px 15px;
+            transition: background-color 0.3s ease;
+            margin: 0 15px;
+            background-color: #0a4b9b;
+            color: white;
+            justify-content: right;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        ul {
+            align-items: right;
+            text-align: right;
+        }
+
+        .card {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .back-to-sitemap-btn {
+            display: inline-block;
+            margin: 40px auto;
+            /* pushes away from edges */
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .back-to-sitemap-btn:hover {
+            background: linear-gradient(135deg, #00f2fe, #4facfe);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <h1>Book an Appointment</h1>
+            <a href="sitemap" class="back-to-sitemap-btn">⬅ Back to Sitemap</a>
+    </header>
+
+    <div class="appointment-form container">
+        <h2>Book Your Tax Appointment</h2>
+        <form action="https://formspree.io/f/xrblvawy" method="POST">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="date">Preferred Date</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="time">Preferred Time</label>
+            <input type="time" id="time" name="time" required>
+
+            <label for="message">Additional Notes</label>
+            <textarea id="message" name="message" rows="4" placeholder="Anything we should know?"></textarea>
+
+            <button type="submit">Book Appointment</button>
+        </form>
+    </div>
+
+</body>
+
+</html>
+<span class="label">Years of Experience</span>
+<span class="icon">🌟</span>
+<script>
+    const yearsCountElement = document.querySelector('.years-experience .count');
+    const yearsLabelElement = document.querySelector('.years-experience .label');
+    const yearsIconElement = document.querySelector('.years-experience .icon');
+
+    // Simulate fetching data from an API
+    setTimeout(() => {
+        const newYearsCount = 10;
+        yearsCountElement.textContent = newYearsCount + '+';
+        yearsLabelElement.textContent = 'Years of Experience';
+        yearsIconElement.textContent = '🏆';
+    }, 2000);
+</script>
+</div>
+
+<footer>
+    <p>&copy; 2025 Tax-Prep Expert. All rights reserved.</p>
+</footer>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Trusted Tax Preparation</title>
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: url('https://images.unsplash.com/photo-1554224154-22dec7ec8818?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .contact-container {
+            background: rgba(255, 255, 255, 0.9);
+            max-width: 1000px;
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-wrap: wrap;
+            overflow: hidden;
+        }
+
+        .contact-info {
+            flex: 1 1 300px;
+            padding: 40px;
+            background: #2b6777;
+            color: #fff;
+        }
+
+        .contact-info h2 {
+            margin-bottom: 20px;
+            font-size: 26px;
+        }
+
+        .contact-info p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .contact-info p span {
+            font-weight: bold;
+        }
+
+        .contact-form {
+            flex: 2 1 400px;
+            padding: 40px;
+        }
+
+        .contact-form h2 {
+            margin-bottom: 20px;
+            color: #2b6777;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: #2b6777;
+            outline: none;
+        }
+
+        .contact-form button {
+            background: #2b6777;
+            color: #fff;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        .contact-form button:hover {
+            background: #1d4853;
+        }
+
+        /* Reset */
+        section {
+            padding: 40px 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            padding: 20px 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #2b6777;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: auto;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            font-size: 14px;
+            border-radius: 12px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            position: fixed;
+        }
+
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .contact-container {
+                flex-direction: column;
+            }
+
+            .contact-info,
+            .contact-form {
+                flex: 1 1 100%;
+            }
+        }
+
+        p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .back-home-btn {
+            display: inline-block;
+            margin: 40px auto;
+            /* pushes away from edges */
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .back-home-btn:hover {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+            color: #333;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<a href="/" class="back-home-btn">⬅ Back to Home Page</a>
+
+<body>
+        <div class="contact-container">
+            <!-- Contact Form -->
+            <div class="contact-form">
+                <h2>Send Us a Message</h2>
+                <form action="https://formspree.io/f/xrblvawy" method="POST">
+                    <input type="text" name="name" placeholder="Your Full Name" required>
+                    <input type="email" name="email" placeholder="Your Email Address" required>
+                    <input type="text" name="subject" placeholder="Subject" required>
+                    <textarea name="message" rows="6" placeholder="Your Message" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+            <footer>
+                <p>© 2025 Trusted Tax Preparation. All rights reserved.</p>
+            </footer>
+
+</body>
+
+</html>

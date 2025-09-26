@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Privacy Policy | Trusted Tax Preparation Services</title>
+    <style>
+        :root {
+            --bg: #f6f9ff;
+            /* page background */
+            --card: #ffffff;
+            /* card background */
+            --ink: #0e1b2a;
+            /* main text */
+            --muted: #5b6b81;
+            /* muted text */
+            --brand: #0a4b9b;
+            /* primary */
+            --brand-2: #0f6adf;
+            /* primary hover */
+            --accent: #e9f2ff;
+            /* light accent */
+            --ring: rgba(15, 106, 223, .25);
+            --shadow: 0 10px 30px rgba(10, 75, 155, .08);
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+            color: var(--ink);
+            background: linear-gradient(180deg, var(--bg), #fff 40%, var(--bg));
+        }
+
+        .wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 32px 20px 80px
+        }
+
+        header.hero {
+            background: radial-gradient(1200px 600px at 10% -20%, var(--accent), transparent 60%),
+                radial-gradient(1000px 600px at 110% -10%, #eef6ff, transparent 60%),
+                linear-gradient(120deg, #0a2a52, #0a3c7a 60%, #0a4b9b);
+            color: #fff;
+            border-radius: calc(var(--radius) + 6px);
+            padding: 48px 28px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            margin: 0 0 8px;
+            font-size: clamp(28px, 4vw, 44px);
+            letter-spacing: .3px
+        }
+
+        .hero p {
+            margin: 0;
+            color: #cfe3ff;
+            font-size: clamp(14px, 2vw, 18px)
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 22px
+        }
+
+        .btn {
+            appearance: none;
+            border: 0;
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-weight: 600;
+            cursor: pointer;
+            background: #fff;
+            color: var(--brand);
+            box-shadow: var(--shadow);
+            transition: transform .12s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 14px 34px rgba(10, 75, 155, .12);
+            background: #f7fbff
+        }
+
+        .btn.primary {
+            background: var(--brand);
+            color: #fff
+        }
+
+        .btn.primary:hover {
+            background: var(--brand-2)
+        }
+
+        .btn.outline {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, .5)
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 28px;
+            margin-top: -20px
+        }
+
+        .eyebrow {
+            display: inline-block;
+            font-size: 12px;
+            letter-spacing: .13em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 8px
+        }
+
+        h2 {
+            margin: 16px 0 10px;
+            font-size: clamp(20px, 3vw, 28px);
+        }
+
+        h3 {
+            margin: 18px 0 6px;
+            font-size: clamp(18px, 2.5vw, 22px);
+        }
+
+        p {
+            margin: 8px 0;
+            color: var(--ink)
+        }
+
+        ul {
+            margin: 8px 0 16px 22px
+        }
+
+        li {
+            margin: 6px 0
+        }
+
+        .toc {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            margin: 12px 0 8px
+        }
+
+        .toc a {
+            display: block;
+            background: var(--accent);
+            padding: 12px 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--brand)
+        }
+
+        .toc a:hover {
+            background: #dff0ff
+        }
+
+        details {
+            border: 1px solid #e7eef8;
+            border-radius: 12px;
+            padding: 12px 14px;
+            margin: 10px 0;
+            background: #fbfdff
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: 600
+        }
+
+        .meta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            color: var(--muted);
+            font-size: 14px
+        }
+
+        .notice {
+            background: linear-gradient(180deg, #fff, #f7fbff);
+            border: 1px solid #e7eef8;
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: #31537f;
+        }
+
+        footer {
+            margin-top: 40px;
+            color: #6a7a90;
+            font-size: 14px;
+            text-align: center
+        }
+
+        .back-to-top {
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            z-index: 50;
+        }
+
+        .back-to-top .btn {
+            background: var(--brand);
+            color: #fff;
+            padding: 10px 12px;
+            border-radius: 999px;
+        }
+
+        @media print {
+
+            .toolbar,
+            .back-to-top {
+                display: none !important
+            }
+
+            body {
+                background: #fff
+            }
+
+            .card,
+            header.hero {
+                box-shadow: none;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact
+            }
+        }
+
+        .contact-form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 40px auto;
+            font-family: Arial, sans-serif;
+        }
+
+        .contact-form h2 {
+            text-align: center;
+            color: #003366;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            background: #2b6777;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: auto;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            font-size: 14px;
+            border-radius: 12px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            position: fixed;
+        }
+
+        .back-to-sitemap-btn {
+            display: inline-block;
+            margin: 20px;
+            padding: 10px 15px;
+            background: linear-gradient(135deg, #00f2fe, #4facfe);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back-to-sitemap-btn:hover {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+
+<a href="sitemap" class="back-to-sitemap-btn">⬅ Back to Sitemap</a>
+
+<body>
+    <div class="wrapper">
+        <header class="hero" role="banner">
+            <h1>Privacy Policy</h1>
+            <p>Your privacy matters. This page explains how we collect, use, and safeguard your information when
+                providing tax preparation services.</p>
+            <div class="toolbar" role="navigation" aria-label="Quick actions">
+                <a class="btn outline" href="/home">🏠 Back to Home</a>
+                <button class="btn primary" onclick="window.print()">🖨️ Print</button>
+            </div>
+        </header>
+
+        <section class="card" aria-labelledby="policy-title">
+            <span class="eyebrow">Trusted Tax Preparation Services</span>
+            <div class="meta" aria-label="Policy metadata">
+                <div><strong>Effective date:</strong> <time datetime="2025-01-01">January 1, 2025</time></div>
+                <div><strong>Last updated:</strong> <time datetime="2025-08-01">August 1, 2025</time></div>
+            </div>
+
+            <h2 id="policy-title">Summary</h2>
+            <p class="notice">We use your information only to deliver tax services, comply with laws, and communicate
+                with you about your returns, filings, and appointments. We never sell your personal information.</p>
+
+            <h2>Table of Contents</h2>
+            <nav class="toc" aria-label="Table of contents">
+                <a href="#info-we-collect">1. Information We Collect</a>
+                <a href="#how-we-use">2. How We Use Information</a>
+                <a href="#legal-basis">3. Legal Basis & Consent</a>
+                <a href="#sharing">4. Sharing & Disclosures</a>
+                <a href="#retention">5. Data Retention</a>
+                <a href="#security">6. Security</a>
+                <a href="#your-rights">7. Your Privacy Rights</a>
+                <a href="#cookies">8. Cookies & Analytics</a>
+                <a href="#children">9. Children’s Data</a>
+                <a href="#changes">10. Changes to This Policy</a>
+                <a href="#contact">11. Contact Us</a>
+            </nav>
+
+            <h2 id="info-we-collect">1. Information We Collect</h2>
+            <p>We collect information necessary to prepare and file your tax returns and to provide related services:
+            </p>
+            <ul>
+                <li><strong>Identity & contact data</strong> (name, address, email, phone, date of birth, SSN/ITIN).
+                </li>
+                <li><strong>Tax & financial data</strong> (W‑2/1099 forms, income, deductions, dependents, bank details
+                    for refunds, employer information).</li>
+                <li><strong>Documents & uploads</strong> you provide (IDs, prior-year returns, receipts).</li>
+                <li><strong>Appointment & support data</strong> (messages, call notes, preferences).</li>
+                <li><strong>Website data</strong> (IP, device, pages viewed) to improve site performance and security.
+                </li>
+            </ul>
+
+            <h2 id="how-we-use">2. How We Use Information</h2>
+            <ul>
+                <li>Prepare, review, and file your federal and state tax returns; provide consultation and year‑round
+                    support.</li>
+                <li>Verify your identity and prevent fraud.</li>
+                <li>Communicate about appointments, document requests, e‑signatures, and status updates.</li>
+                <li>Process payments and issue invoices or refund status notices.</li>
+                <li>Comply with legal, regulatory, and professional obligations.</li>
+            </ul>
+
+            <h2 id="legal-basis">3. Legal Basis & Consent</h2>
+            <p>Depending on your location, we process data under one or more of the following legal bases: performance
+                of a contract (providing tax services), compliance with legal obligations (tax laws, anti‑fraud),
+                legitimate interests (service quality and security), and your consent where required (e.g., marketing
+                messages). You may withdraw consent at any time.</p>
+
+            <h2 id="sharing">4. Sharing & Disclosures</h2>
+            <p>We do not sell personal information. We may share data with:</p>
+            <ul>
+                <li><strong>Tax authorities & agencies</strong> to file returns or respond to lawful requests.</li>
+                <li><strong>Service providers</strong> (e.g., secure e‑signature, cloud storage, email, scheduling,
+                    payment processors) bound by confidentiality and data‑protection obligations.</li>
+                <li><strong>Professional advisors</strong> (legal, accounting) under confidentiality.</li>
+                <li><strong>Business transfers</strong> in the event of a merger, acquisition, or similar.</li>
+            </ul>
+            <details>
+                <summary>State & regional notices (CCPA/CPRA, GDPR, etc.)</summary>
+                <p><strong>California:</strong> We do not sell or share your personal information for cross‑context
+                    behavioral advertising. You may request access, correction, or deletion of your information subject
+                    to legal exceptions (e.g., records we must keep for tax law). Authorized agents may submit requests
+                    on your behalf.</p>
+                <p><strong>EEA/UK:</strong> You may request access, rectification, erasure, restriction, portability, or
+                    object to certain processing. You also have the right to lodge a complaint with your supervisory
+                    authority.</p>
+            </details>
+
+            <h2 id="retention">5. Data Retention</h2>
+            <p>We retain records only as long as necessary to deliver services and meet legal and professional
+                requirements (e.g., IRS/state record‑keeping rules). When retention periods end, we securely delete or
+                anonymize data.</p>
+
+            <h2 id="security">6. Security</h2>
+            <p>We use administrative, technical, and physical safeguards designed to protect your information, including
+                access controls, encryption in transit, secure storage, and staff training. No method of transmission or
+                storage is 100% secure; we work to continually improve our safeguards.</p>
+
+            <h2 id="your-rights">7. Your Privacy Rights</h2>
+            <ul>
+                <li>Request access to the personal information we hold about you.</li>
+                <li>Request correction or deletion where applicable.</li>
+                <li>Opt out of marketing communications at any time.</li>
+                <li>Request a copy of your records (subject to verification and legal limits).</li>
+            </ul>
+            <p>To exercise these rights, contact us using the details below. We will verify your identity before
+                responding.</p>
+
+            <h2 id="cookies">8. Cookies & Analytics</h2>
+            <p>We use essential cookies for site functionality and may use limited analytics to improve our website. You
+                can control cookies through your browser settings. Blocking some types may impact site experience.</p>
+
+            <h2 id="children">9. Children’s Data</h2>
+            <p>Our services are intended for adults. We do not knowingly collect personal information from children
+                under 13. If you believe a child has provided us information, contact us and we will take appropriate
+                steps.</p>
+
+            <h2 id="changes">10. Changes to This Policy</h2>
+            <p>We may update this policy to reflect changes in laws or our practices. If material changes are made, we
+                will notify you by updating the “Last updated” date and, where appropriate, by additional notice.</p>
+
+            <h2 id="contact">11. Contact Us</h2>
+            <address>
+                <p><strong>Trusted Tax Preparation Services</strong><br />
+                    320 23rd St, South, Arlington, VA, 22202<br />
+                    Email: <a href="mailto:info@tax-expert.com">info@tax-expert.com</a><br />
+                    Phone: <a href="tel:+15551234567">760-978-4162</a>
+                </p>
+            </address>
+
+            <p>If you have questions about this policy or how we handle your information, please contact us. We will
+                respond promptly.</p>
+        </section>
+
+        <footer>
+            © <span id="year"></span> Trusted Tax Preparation Services. All rights reserved.
+        </footer>
+
+        <div class="back-to-top">
+            <button class="btn" aria-label="Back to top"
+                onclick="window.scrollTo({top:0, behavior:'smooth'})">↑</button>
+        </div>
+    </div>
+
+    <script>
+        // dynamic year
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+
+</html>

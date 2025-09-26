@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Frequently Asked Questions - Tax Prep Expert</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<style>
+    /* FAQ Page */
+    .faq-container {
+        max-width: 800px;
+        margin: 60px auto;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .faq-container h1 {
+        font-size: 2.3rem;
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .faq-container .intro {
+        text-align: center;
+        color: #555;
+        font-size: 1.1rem;
+        margin-bottom: 30px;
+    }
+
+    .faq-item {
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .faq-item h2 {
+        font-size: 1.2rem;
+        color: #0077cc;
+        margin-bottom: 8px;
+    }
+
+    .faq-item p {
+        font-size: 1rem;
+        color: #444;
+        line-height: 1.6;
+    }
+
+    /* Links inside FAQ */
+    .faq-item a {
+        color: #0077cc;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .faq-item a:hover {
+        text-decoration: underline;
+    }
+
+    .back-home {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    /* Back to Sitemap Button */
+    .back-sitemap {
+        text-align: center;
+        /* center the button */
+        margin: 40px 0;
+        /* space above and below */
+    }
+
+    .back-sitemap a {
+        display: inline-block;
+        padding: 12px 28px;
+        background: linear-gradient(135deg, #ff7e5f, #feb47b);
+        /* warm gradient */
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 30px;
+        box-shadow: 0 4px 12px rgba(255, 126, 95, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .back-sitemap a:hover {
+        background: linear-gradient(135deg, #e55d3f, #fd9e50);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 18px rgba(255, 126, 95, 0.4);
+    }
+
+    .back-sitemap a:active {
+        transform: translateY(1px);
+        box-shadow: 0 3px 8px rgba(255, 126, 95, 0.4);
+    }
+
+    footer {
+        text-align: center;
+        padding: 15px;
+        background: #0077cc;
+        color: white;
+        margin-top: 40px;
+        border-radius: 0 0 12px 12px;
+    }
+</style>
+
+<body>
+    <div class="faq-container">
+        <h1>Frequently Asked Questions</h1>
+        <p class="intro">Here are answers to some of the most common questions about our tax preparation services.</p>
+
+        <div class="faq-item">
+            <h2>1. What documents do I need to bring for tax preparation?</h2>
+            <p>You’ll need your W-2s, 1099s, prior year tax returns, Social Security numbers for all dependents, and any
+                receipts related to deductions (such as education, childcare, or medical expenses).</p>
+        </div>
+
+        <div class="faq-item">
+            <h2>2. How long does a typical tax preparation appointment take?</h2>
+            <p>Most appointments take 45–90 minutes depending on the complexity of your return. Business filings or
+                multiple income sources may take longer.</p>
+        </div>
+
+        <div class="faq-item">
+            <h2>3. Can you file my taxes electronically?</h2>
+            <p>Yes, we offer secure electronic filing (e-file) for both federal and state returns. You’ll get
+                confirmation when your return is accepted.</p>
+        </div>
+
+        <div class="faq-item">
+            <h2>4. Do you offer virtual/remote appointments?</h2>
+            <p>Absolutely. You can upload your documents securely online and schedule a virtual consultation with one of
+                our tax professionals.</p>
+        </div>
+
+        <div class="faq-item">
+            <h2>5. How much do your tax preparation services cost?</h2>
+            <p>Pricing depends on the type of return. Individual returns start at $130, married filing jointly at $150,
+                and business returns vary. Visit our <a href="/pricing">Pricing Page</a> for details.</p>
+        </div>
+
+        <div class="faq-item">
+            <h2>6. How do I book an appointment?</h2>
+            <p>You can easily <a href="/book-an-appointment">book an appointment online</a> through our scheduling
+                system or call our office.</p>
+        </div>
+        <div class="faq-item">
+            <h2>7. What if I need to amend a previous tax return?</h2>
+            <p>We can help you file an amended return if you need to correct errors or add information to a previously
+                filed return.</p>
+        </div>
+        <div class="back-sitemap">
+            <a href="/sitemap">⬅ Back to Sitemap</a>
+        </div>
+    </div>
+</body>
+
+<footer>
+    <p>&copy; <%= new Date().getFullYear() %> Tax Prep Expert. All rights reserved.</p>
+
+</footer>
+</html>

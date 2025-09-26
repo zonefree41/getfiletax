@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Filing Options</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 40px;
+            text-align: center;
+            background-color: #dbeafe;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 40px;
+            background-color: #00a329;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-transform: uppercase;
+        }
+
+        h3 {
+            color: #444;
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            background-color: #b0d0f0;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        /* Flex container for cards */
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        /* Card style */
+        .card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 16px;
+            width: 300px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            color: #444;
+        }
+
+        .card p {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        /* Checkout button */
+        .checkout-btn {
+            display: inline-block;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #0077cc;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            width: 100%;
+        }
+
+        .checkout-btn:hover {
+            background-color: #005fa3;
+        }
+
+        footer {
+            margin-top: 60px;
+            font-size: 14px;
+            color: #999;
+            text-align: center;
+            align-items: bottom;
+            position: relative;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            position: fixed;
+            background-color: black;
+            color: white;
+            padding: 10px;
+        }
+
+        .back-btn {
+            margin-top: 30px;
+            padding: 10px 20px;
+            font-size: 14px;
+            background-color: #555;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            width: auto;
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            background-color: #333;
+            border: 2px solid #333;
+            text-transform: uppercase;
+            position: center;
+            bottom: 20px;
+            left: 0;
+        }
+
+        .back-btn:hover {
+            background-color: #333;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* Container */
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+            text-align: center;
+            background-color: #e0f2fe;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Checkout Button */
+        .checkout-btn {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Select Your Tax Filing Option</h1>
+
+    <div class="options">
+
+        <!-- Family Filing Card -->
+        <div class="card">
+            <h3>Family Tax Filing - $150</h3>
+            <p>Comprehensive tax filing for families, including multiple dependents and credits.</p>
+            <form action="/checkout/family" method="post">
+                <input type="submit" class="checkout-btn" value="Proceed to Checkout" />
+            </form>
+        </div>
+
+        <!-- Individual Filing Card -->
+        <div class="card">
+            <h3>Individual Tax Filing - $130</h3>
+            <p>Basic tax filing for individuals with no dependents.</p>
+            <form action="/checkout/individual" method="post">
+                <input type="submit" class="checkout-btn" value="Proceed to Checkout" />
+            </form>
+        </div>
+
+        <!-- Business Filing Card -->
+        <div class="card">
+            <h3>Business Tax Filing - $250</h3>
+            <p>Specialized tax filing for small businesses and self-employed individuals.</p>
+            <form action="/checkout/business" method="post">
+                <input type="submit" class="checkout-btn" value="Proceed to Checkout" />
+            </form>
+
+        </div>
+
+        <a href="/home">
+            <button class="back-btn">⬅ Back to Previous Page</button>
+        </a>
+
+        <footer>
+            <p>&copy; 2025 Tax-Prep Service. All rights reserved.</p>
+        </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book an Appointment | Tax-Prep Expert</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f7fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .appointment-container {
+            max-width: 600px;
+            margin: 60px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        p.intro {
+            text-align: center;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #0077cc;
+            box-shadow: 0 0 5px rgba(0, 119, 204, 0.3);
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #0077cc;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #005fa3;
+        }
+
+        /* Back to Home Button */
+        .back-home {
+            text-align: center;
+            /* center the button */
+            margin: 40px 0;
+            /* spacing above and below */
+        }
+
+        .back-home a {
+            display: inline-block;
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #0077ff, #00c6ff);
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0, 119, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .back-home a:hover {
+            background: linear-gradient(135deg, #005fcc, #00a6cc);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(0, 119, 255, 0.4);
+        }
+
+        .back-home a:active {
+            transform: translateY(1px);
+            box-shadow: 0 3px 8px rgba(0, 119, 255, 0.4);
+        }
+
+        /* Appointment Container */
+        .appointment-container {
+            max-width: 650px;
+            /* container width */
+            margin: 80px auto;
+            /* center horizontally and add top margin */
+            padding: 40px;
+            /* spacing inside container */
+            background: #ffffff;
+            /* white background */
+            border-radius: 20px;
+            /* rounded corners */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            /* subtle shadow */
+            text-align: center;
+            /* center text inside container */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .appointment-container:hover {
+            transform: translateY(-5px);
+            /* subtle lift on hover */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Title */
+        .appointment-container h1 {
+            font-size: 2.2rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        /* Intro paragraph */
+        .appointment-container .intro {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 35px;
+            line-height: 1.6;
+        }
+
+        /* Optional: add a subtle gradient background */
+        body {
+            background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Appointment Page Heading */
+        .appointment-container h1 {
+            font-size: 2.5rem;
+            /* large, bold heading */
+            font-weight: 700;
+            color: #2c3e50;
+            /* dark slate blue */
+            text-align: center;
+            /* center on the page */
+            margin-bottom: 15px;
+            /* spacing below the heading */
+            letter-spacing: 1px;
+            /* subtle spacing for elegance */
+            background-color: #00c6ff;
+        }
+
+        .appointment-container .intro {
+            font-size: 1.15rem;
+            /* readable paragraph size */
+            color: #555;
+            /* medium gray for softer text */
+            text-align: center;
+            /* center the text */
+            margin-bottom: 35px;
+            /* spacing before form starts */
+            line-height: 1.6;
+            /* comfortable line spacing */
+            max-width: 650px;
+            /* prevent text from stretching too wide */
+            margin-left: auto;
+            margin-right: auto;
+            /* center the block horizontally */
+        }
+
+        header {
+            background: #003366;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="appointment-container">
+        <h1>Book an Appointment</h1>
+        <p class="intro">Schedule your tax preparation session with us. Fill in the details below:</p>
+
+        <form action="https://formspree.io/f/xrblvawy" method="POST" class="appointment-form">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="John Doe" required>
+
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="(123) 456-7890" required>
+
+            <label for="service">Select Service</label>
+            <select id="service" name="service" required>
+                <option value="">-- Please choose --</option>
+                <option value="individual">Individual Tax Filing</option>
+                <option value="joint">Married Filing Jointly</option>
+                <option value="business">Business Tax Filing</option>
+                <option value="consultation">Consultation</option>
+            </select>
+
+            <label for="date">Preferred Date</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="message">Additional Notes</label>
+            <textarea id="message" name="message" rows="4" placeholder="Any special requests?"></textarea>
+
+            <button type="submit">Book Appointment</button>
+        </form>
+
+        <div class="back-home">
+            <a href="/">⬅ Back to Home</a>
+        </div>
+    </div>
+
+</body>
