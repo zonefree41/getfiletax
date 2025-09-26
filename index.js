@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const { SitemapStream, streamToPromise } = require('sitemap');
 const { createGzip } = require('zlib');
@@ -11,8 +11,12 @@ const pipeline = sitemapStream.pipe(createGzip());
 const app = express();
 exports.app = app;
 
-app.set('view engine', 'ejs');
-app.set('views', './views');
+const path = require('path');
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 
 
 // Home route
@@ -133,7 +137,6 @@ app.use((req, res, next) => {
 app.use(express.static("public"));
 
 // Serve all static files in (CSS, JS, Images) from "public" folder
-const path = require('path');
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use("/css", express.static(path.join(__dirname, 'public/css')));
@@ -143,8 +146,8 @@ app.use("/images", express.static(path.join(__dirname, 'public/images')));
 
 
 // Set view engine to EJS
-app.set("view engine", "ejs");
-app.set("view engine", "ejs");
+app.set("views engine", "ejs");
+app.set("views engine", "ejs");
 
 app.get("/", (req, res) => {
     res.render("home");
