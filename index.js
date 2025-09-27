@@ -127,8 +127,6 @@ app.get('/cancel', (req, res) => {
     res.redirect('/');
 });
 
-app.listen(3000, () => console.log("Server running at http://localhost:3000"));
-
 app.listen(3000, () => {
     console.log('Server is running on http://localhost:3000');
 });
@@ -145,17 +143,16 @@ app.get("/", (req, res) => {
 });
 
 // Route 
-app.get("/", (req, res) => res.redirect("/home"));
 app.get("/home", (req, res) => res.render("home"));
 app.get("/about", (req, res) => res.render("about"));
 app.get("/contact", (req, res) => res.render("contact"));
-app.get("/book-now", (req, res) => res.render("book now"));
-app.get("/appointments", (req, res) => res.render("Appointments"));
-app.get("/book-an-appointment", (req, res) => res.render("book an appointment"));
-app.get("/get-consultation", (req, res) => res.render("getconsultation"));
+app.get("/book-now", (req, res) => res.render("book-now"));
+app.get("/appointments", (req, res) => res.render("appointments"));
+app.get("/book-an-appointment", (req, res) => res.render("book-an-appointment"));
+app.get("/get-consultation", (req, res) => res.render("get-consultation"));
 app.get("/explore", (req, res) => res.render("explore"));
-app.get("/get-free-consultation", (req, res) => res.render("getfreeconsultation"));
-app.get("/view-our-services", (req, res) => res.render("viewourservices"));
+app.get("/get-free-consultation", (req, res) => res.render("get-free-consultation"));
+app.get("/view-our-services", (req, res) => res.render("view-our-services"));
 app.get("/get-started", (req, res) => res.render("get-started"));
 app.get("/pricing", (req, res) => res.render("pricing"));
 app.get("/checkout", (req, res) => res.render("checkout"));
@@ -164,7 +161,7 @@ app.get("/terms", (req, res) => res.render("terms"));
 app.get("/book", (req, res) => res.render("Book"));
 
 app.get("/privacy", (req, res) => res.render("privacy"));
-app.get("/terms", (req, res) => res.render("Terms of Service"));
+app.get("/terms", (req, res) => res.render("terms"));
 app.get("/sitemap", (req, res) => res.render("sitemap"));
 app.get("/faq", (req, res) => res.render("faq"));
 app.get("/blog", (req, res) => res.render("blog"));
@@ -183,7 +180,8 @@ app.get("/payment-success", (req, res) => res.render("success"));
 app.get("/payment-cancel", (req, res) => res.render("cancel"));
 
 // Images route
-app.get("/images", (req, res) => res.render("/images"));
+app.use("/images", express.static(path.join(__dirname, "public/images")));
+
 
 
 
