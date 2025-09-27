@@ -157,7 +157,7 @@ app.get("/get-started", (req, res) => res.render("get-started"));
 app.get("/pricing", (req, res) => res.render("pricing"));
 app.get("/checkout", (req, res) => res.render("checkout"));
 app.get("/services", (req, res) => res.render("services"));
-app.get("/terms", (req, res) => res.render("terms"));
+app.get("/terms", (req, res) => res.render("terms", { company: { name: "Tax Expert", address: "320 23rd St, Arlington, VA, 22202 USA", contactEmail: "info@tax-expert.pro" } }));
 app.get("/book", (req, res) => res.render("book"));
 
 app.get("/privacy", (req, res) => res.render("privacy", { company: { name: "Tax Expert", address: "320 23rd St, Arlington, VA, 22202 USA", contactEmail: "info@tax-expert.pro" } }));
