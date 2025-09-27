@@ -1,23 +1,39 @@
 require('dotenv').config();
-const express = require("express");
+const express = require('express');
 const path = require("path");
-const app = express();
-
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+const { SitemapStream, streamToPromise } = require("sitemap");
+const { createGzip } = require('zlib');
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-const { SitemapStream, streamToPromise } = require('sitemap');
-const { createGzip } = require('zlib');
+const app = express();
+
+//view engine setup
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
 
 const sitemapStream = new SitemapStream({ hostname: 'http://localhost:3000' });
 const pipeline = sitemapStream.pipe(createGzip());
 
+// Server static files from the "public" directory
+app.use(express.static("public"));
 
-// Home route
+// Serve all static files in (CSS, JS, Images) from "public" folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use("/css", express.static(path.join(__dirname, 'public/css')));
+app.use("/images", express.static(path.join(__dirname, 'public/images')));
+
+
+
+// Home page
 
 app.get("/", (req, res) => {
-    res.render("home"); // Render the home.ejs file
+    res.render("home"); // home.ejs
+});
+
+app.get("/consultation", (req, res) => {
+    res.render("consultation"); // consultation.ejs
 });
 
 // Create Checkout Session for single filing ($130)
@@ -123,16 +139,6 @@ app.use((req, res, next) => {
     next();
 });
 
-// Server static files from the "public" directory
-app.use(express.static("public"));
-
-// Serve all static files in (CSS, JS, Images) from "public" folder
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use("/css", express.static(path.join(__dirname, 'public/css')));
-app.use("/images", express.static(path.join(__dirname, 'public/images')));
-
-
 
 app.get("/", (req, res) => {
     res.render("home");
@@ -146,7 +152,7 @@ app.get("/contact", (req, res) => res.render("contact"));
 app.get("/book-now", (req, res) => res.render("book now"));
 app.get("/appointments", (req, res) => res.render("Appointments"));
 app.get("/book-an-appointment", (req, res) => res.render("book an appointment"));
-app.get("/consultation", (req, res) => res.render("Consultation"));
+app.get("/consultation", (req, res) => res.render("consultation"));
 app.get("/explore", (req, res) => res.render("explore"));
 app.get("/get-free-consultation", (req, res) => res.render("getfreeconsultation"));
 app.get("/view-our-services", (req, res) => res.render("viewourservices"));
