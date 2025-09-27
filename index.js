@@ -1,11 +1,15 @@
 require('dotenv').config();
 const express = require('express');
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+console.log("Stripe Secret Key:", process.env.STRIPE_SECRET_KEY); // Debugging line
+
+const app = express();
+
 const path = require("path");
 const { SitemapStream, streamToPromise } = require("sitemap");
 const { createGzip } = require('zlib');
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-const app = express();
+
 
 //view engine setup
 app.set("view engine", "ejs");
@@ -30,10 +34,6 @@ app.use("/images", express.static(path.join(__dirname, 'public/images')));
 
 app.get("/", (req, res) => {
     res.render("home"); // home.ejs
-});
-
-app.get("/consultation", (req, res) => {
-    res.render("consultation"); // consultation.ejs
 });
 
 // Create Checkout Session for single filing ($130)
@@ -152,7 +152,7 @@ app.get("/contact", (req, res) => res.render("contact"));
 app.get("/book-now", (req, res) => res.render("book now"));
 app.get("/appointments", (req, res) => res.render("Appointments"));
 app.get("/book-an-appointment", (req, res) => res.render("book an appointment"));
-app.get("/consultation", (req, res) => res.render("consultation"));
+app.get("/get-consultation", (req, res) => res.render("getconsultation"));
 app.get("/explore", (req, res) => res.render("explore"));
 app.get("/get-free-consultation", (req, res) => res.render("getfreeconsultation"));
 app.get("/view-our-services", (req, res) => res.render("viewourservices"));

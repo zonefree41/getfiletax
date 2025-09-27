@@ -1,6 +1,0 @@
-<a class="nav-link" href="/viewourservices">View Our Services</a>
-
-
-app.get("/viewourservices", (req, res) => {
-    res.render("viewOurServices"); // matches "views/viewOurServices.ejs"
-});
