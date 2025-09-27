@@ -1,5 +1,10 @@
 require('dotenv').config();
-const express = require('express');
+const express = require("express");
+const path = require("path");
+const app = express();
+
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const { SitemapStream, streamToPromise } = require('sitemap');
@@ -8,26 +13,11 @@ const { createGzip } = require('zlib');
 const sitemapStream = new SitemapStream({ hostname: 'http://localhost:3000' });
 const pipeline = sitemapStream.pipe(createGzip());
 
-const app = express();
-exports.app = app;
-
-const path = require('path');
-const bodyParser = require('body-parser');
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-
 
 // Home route
 
-app.get('/', (req, res) => {
-    res.render('home');
-});
-
-// ✅ Render your index page
 app.get("/", (req, res) => {
-    res.render("home");
+    res.render("home"); // Render the home.ejs file
 });
 
 // Create Checkout Session for single filing ($130)
@@ -142,12 +132,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use("/css", express.static(path.join(__dirname, 'public/css')));
 app.use("/images", express.static(path.join(__dirname, 'public/images')));
 
-// Duplicate declarations removed
 
-
-// Set view engine to EJS
-app.set("views engine", "ejs");
-app.set("views engine", "ejs");
 
 app.get("/", (req, res) => {
     res.render("home");
