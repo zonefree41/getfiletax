@@ -5,15 +5,15 @@ console.log("Stripe Secret Key:", process.env.STRIPE_SECRET_KEY); // Debugging l
 
 const app = express();
 
-const path = require("path");
 const { SitemapStream, streamToPromise } = require("sitemap");
 const { createGzip } = require('zlib');
 
 
 
 //view engine setup
+const path = require("path");
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "/views"));
 
 
 const sitemapStream = new SitemapStream({ hostname: 'http://localhost:3000' });
