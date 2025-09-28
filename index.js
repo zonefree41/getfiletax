@@ -43,7 +43,7 @@ app.get("/privacy", (req, res) => res.render("privacy", { company: { name: "Tax 
 
 // Booking & consultation pages
 app.get('/book-now', (req, res) => res.render('book-now'));
-app.get('/appointments', (req, res) => res.render('appointments'));
+app.get('/appointment', (req, res) => res.render('appointment'));
 app.get('/book-an-appointment', (req, res) => res.render('book-an-appointment'));
 app.get('/get-consultation', (req, res) => res.render('get-consultation'));
 app.get('/get-free-consultation', (req, res) => res.render('get-free-consultation'));
