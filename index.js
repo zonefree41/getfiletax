@@ -24,7 +24,7 @@ app.get('/', (req, res) => res.redirect('/home'));
 app.get('/home', (req, res) => res.render('home'));
 
 // Static pages
-app.get('/about', (req, res) => res.render('about'));
+app.get('/about-us', (req, res) => res.render('about-us'));
 app.get('/contact-us', (req, res) => res.render('contact-us'));
 app.get('/pricing', (req, res) => res.render('pricing'));
 app.get('/services', (req, res) => res.render('services'));
