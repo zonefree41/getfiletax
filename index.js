@@ -27,6 +27,7 @@ app.get('/home', (req, res) => res.render('home'));
 app.get('/about-us', (req, res) => res.render('about-us'));
 app.get('/contact-us', (req, res) => res.render('contact-us'));
 app.get('/pricing', (req, res) => res.render('pricing'));
+app.get("/checkout", (req, res) => res.render("checkout"));
 app.get('/services', (req, res) => res.render('services'));
 app.get('/faq', (req, res) => res.render('faq'));
 app.get('/sitemap', (req, res) => res.render('sitemap'));
