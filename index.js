@@ -14,6 +14,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
 // Debug Stripe key
 console.log('Stripe Secret Key:', process.env.STRIPE_SECRET_KEY);
 
@@ -47,6 +48,8 @@ app.get('/book-now', (req, res) => res.render('book-now'));
 app.get('/appointment', (req, res) => res.render('appointment'));
 app.get('/book-an-appointment', (req, res) => res.render('book-an-appointment'));
 app.get('/get-consultation', (req, res) => res.render('get-consultation'));
+app.get('/upload-documents', (req, res) => res.render('upload-documents'));
+app.get('/upload-forms', (req, res) => res.render('upload-forms'));
 app.get('/get-free-consultation', (req, res) => res.render('get-free-consultation'));
 app.get('/view-our-services', (req, res) => res.render('view-our-services'));
 app.get('/get-started', (req, res) => res.render('get-started'));
@@ -117,6 +120,34 @@ app.post('/checkout/family', async (req, res) => {
 // Payment success / cancel pages
 app.get('/success', (req, res) => res.render('success'));
 app.get('/cancel', (req, res) => res.redirect('/get-started'));
+
+// =================== File Upload (W-2 / 1099) ===================
+const fs = require("fs");
+const multer = require("multer");
+
+const uploadPath = path.join(__dirname, "uploads");
+if (!fs.existsSync(uploadPath)) {
+    fs.mkdirSync(uploadPath);
+}
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, uploadPath);
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + "-" + file.originalname);
+    }
+});
+
+const upload = multer({ storage });
+
+// Handle multiple uploads (e.g. W-2, 1099, etc.)
+app.post("/upload-forms", upload.array("documents", 10), (req, res) => {
+    console.log("Uploaded files:", req.files);
+    res.render("upload-success", { files: req.files });
+});
+
+app.use("/uploads", express.static(uploadPath));
 
 // =================== Start Server ===================
 const PORT = process.env.PORT || 3000;

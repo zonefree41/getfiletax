@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Upload Success</title>
+    <link rel="stylesheet" href="/../css/upload-success.css">
+</head>
+<style>
+    .success-card {
+        max-width: 700px;
+        margin: 60px auto;
+        padding: 30px 40px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        text-align: center;
+        font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    .success-card h1 {
+        font-size: 28px;
+        color: #0ea5a4;
+        /* teal accent */
+        margin-bottom: 12px;
+    }
+
+    .success-card p {
+        font-size: 16px;
+        color: #374151;
+        /* muted dark text */
+        margin-bottom: 20px;
+    }
+
+    .success-card ul {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 30px;
+    }
+
+    .success-card ul li {
+        background: #f1f5f9;
+        padding: 10px 15px;
+        margin-bottom: 8px;
+        border-radius: 8px;
+        font-size: 15px;
+        color: #111827;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .success-card a {
+        display: inline-block;
+        padding: 12px 24px;
+        border-radius: 10px;
+        background: #0ea5a4;
+        color: white;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .success-card a:hover {
+        background: #047f7d;
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 600px) {
+        .success-card {
+            padding: 20px;
+            margin: 40px 15px;
+        }
+    }
+</style>
+
+<body>
+    <div class="success-card">
+        <h1>Upload Successful ✅</h1>
+        <p>The following files have been uploaded successfully:</p>
+        <ul>
+            <% files.forEach(file=> { %>
+                <li>
+                    <%= file.originalname %>
+                        <a href="/uploads/<%= file.filename %>" target="_blank">View</a>
+                </li>
+                <% }) %>
+        </ul>
+        <a href="/upload-forms">Upload More Files</a>
+        <br /><br />
+        <a href="/home" class="btn secondary">Go back to Home</a>
+    </div>
+</body>
+
+</html>
