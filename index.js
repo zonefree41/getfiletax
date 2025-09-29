@@ -147,7 +147,10 @@ app.post("/upload-forms", upload.array("documents", 10), (req, res) => {
     res.render("upload-success", { files: req.files });
 });
 
+
+
 app.use("/uploads", express.static(uploadPath));
+
 
 // =================== Start Server ===================
 const PORT = process.env.PORT || 3000;
