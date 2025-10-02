@@ -2,6 +2,10 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const fs = require("fs");
+const multer = require("multer");
+const { S3Client } = require("@aws-sdk/client-s3");
+const multerS3 = require("multer-s3");
 
 const app = express();
 
@@ -40,8 +44,10 @@ const companyInfo = {
     contactEmail: "info@tax-expert.pro"
 };
 
-app.get("/terms", (req, res) => res.render("terms", { company: { name: "Tax Expert", address: "320 23rd St, Arlington, VA, 22202 USA", contactEmail: "info@tax-expert.pro" } }));
-app.get("/privacy", (req, res) => res.render("privacy", { company: { name: "Tax Expert", address: "320 23rd St, Arlington, VA, 22202 USA", contactEmail: "info@tax-expert.pro" } }));
+app.get("/terms", (req, res) =>
+    res.render("terms", { company: { name: "Tax Expert", address: "320 23rd St, Arlington, VA, 22202 USA", contactEmail: "info@tax-expert.pro" } }));
+app.get("/privacy", (req, res) =>
+    res.render("privacy", { company: { name: "Tax Expert", address: "320 23rd St, Arlington, VA, 22202 USA", contactEmail: "info@tax-expert.pro" } }));
 
 // Booking & consultation pages
 app.get('/book-now', (req, res) => res.render('book-now'));
@@ -122,35 +128,65 @@ app.get('/success', (req, res) => res.render('success'));
 app.get('/cancel', (req, res) => res.redirect('/get-started'));
 
 // =================== File Upload (W-2 / 1099) ===================
-const fs = require("fs");
-const multer = require("multer");
 
-const uploadPath = path.join(__dirname, "uploads");
-if (!fs.existsSync(uploadPath)) {
-    fs.mkdirSync(uploadPath);
-}
+// =================== File Upload (Local) ===================
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, uploadPath);
+// Create local uploads folder (for dev)
+const uploadPath = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadPath)) fs.mkdirSync(uploadPath);
+
+const localStorage = multer.diskStorage({
+    destination: (req, file, cb) => cb(null, uploadPath),
+    filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname),
+});
+const localUpload = multer({ storage: localStorage });
+
+// =================== AWS S3 (SDK v3) storage (for production) ===================
+
+const s3 = new S3Client({
+    region: process.env.AWS_REGION,
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + "-" + file.originalname);
-    }
 });
 
-const upload = multer({ storage });
+const s3Upload = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: process.env.AWS_BUCKET_NAME,
+        acl: 'private',
+        key: (req, file, cb) => {
+            cb(null, Date.now() + "-" + file.originalname);
+        },
+    }),
+});
 
-// Handle multiple uploads (e.g. W-2, 1099, etc.)
-app.post("/upload-forms", upload.array("documents", 10), (req, res) => {
-    console.log("Uploaded files:", req.files);
+
+// =================== Upload Routes ===================
+
+// form page
+app.get("/upload-forms", (req, res) => res.render("upload-forms"));
+
+
+// Upload locally (dev/test)
+app.post("/upload-forms", localUpload.array("documents", 10), (req, res) => {
+    console.log("Local Uploaded files:", req.files.map(f => f.originalname));
+
+    res.render("upload-success", { files: req.files });
+});
+
+// Upload to S3 (production)
+app.post("/upload-forms-s3", s3Upload.array("documents", 10), (req, res) => {
+    console.log("S3 Uploaded:", req.files.map(f => f.originalname));
     res.render("upload-success", { files: req.files });
 });
 
 
+// =================== Upload Route ===================
 
-app.use("/uploads", express.static(uploadPath));
-
+// Serve local uploads folder (optional, only works if using local storage)
+app.use("/uploads", express.static(path.join(__dirname, 'uploads')));
 
 // =================== Start Server ===================
 const PORT = process.env.PORT || 3000;
