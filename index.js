@@ -10,11 +10,11 @@ const multerS3 = require("multer-s3");
 const app = express();
 
 // View engine setup
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
 // Middleware
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -178,7 +178,6 @@ app.post("/upload-forms-s3", s3Upload.array("documents", 10), (req, res) => {
     console.log("S3 Uploaded:", req.files.map(f => f.originalname));
     res.render("upload-success", { files: req.files });
 });
-
 
 // =================== Upload Route ===================
 

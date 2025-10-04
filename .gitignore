@@ -2,3 +2,14 @@ node_modules/
 database.db
 .env
 *.log
+
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# OS / system files
+.DS_Store
+Thumbs.db
+AppData/
