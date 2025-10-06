@@ -140,24 +140,35 @@ const localUpload = multer({ storage: localStorage });
 
 // =================== AWS S3 (SDK v3) storage (for production) ===================
 
+// Initialize S3 client
 const s3 = new S3Client({
-    region: process.env.AWS_REGION,
+    region: process.env.AWS_REGION,   // e.g. "us-east-1"
     credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        accessKeyId: process.env.AWS_KEY,
+        secretAccessKey: process.env.AWS_SECRET,
     },
 });
 
-const s3Upload = multer({
+// Configure Multer-S3 storage
+const upload = multer({
     storage: multerS3({
         s3: s3,
-        bucket: process.env.AWS_BUCKET_NAME,
-        acl: 'private',
+        bucket: process.env.AWS_BUCKET_NAME, // put your bucket name in .env
+        acl: "private", // or "public-read" if you want public access
         key: (req, file, cb) => {
-            cb(null, Date.now() + "-" + file.originalname);
+            cb(null, Date.now().toString() + "-" + file.originalname);
         },
     }),
 });
+
+// Upload route
+app.post("/upload", upload.single("file"), (req, res) => {
+    res.send({
+        message: "✅ File uploaded successfully to S3",
+        fileUrl: req.file.location, // URL to the uploaded file
+    });
+});
+
 
 
 // =================== Upload Routes ===================
@@ -174,7 +185,7 @@ app.post("/upload-forms", localUpload.array("documents", 10), (req, res) => {
 });
 
 // Upload to S3 (production)
-app.post("/upload-forms-s3", s3Upload.array("documents", 10), (req, res) => {
+app.post("/upload-forms-s3", upload.array("documents", 10), (req, res) => {
     console.log("S3 Uploaded:", req.files.map(f => f.originalname));
     res.render("upload-success", { files: req.files });
 });
