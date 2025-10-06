@@ -179,14 +179,14 @@ app.get("/upload-forms", (req, res) => res.render("upload-forms"));
 
 // Upload locally (dev/test)
 app.post("/upload-forms", localUpload.array("documents", 10), (req, res) => {
-    console.log("Local Uploaded files:", req.files.map(f => f.originalname));
+    console.log("Local Uploaded files:", req.files.map(f => f.location));
 
     res.render("upload-success", { files: req.files });
 });
 
 // Upload to S3 (production)
 app.post("/upload-forms-s3", upload.array("documents", 10), (req, res) => {
-    console.log("S3 Uploaded:", req.files.map(f => f.originalname));
+    console.log("S3 Uploaded:", req.files.map(f => f.location));
     res.render("upload-success", { files: req.files });
 });
 
