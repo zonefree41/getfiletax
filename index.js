@@ -42,9 +42,9 @@ const companyInfo = {
 };
 
 app.get('/terms', (req, res) =>
-    res.render("terms", { company: { name: "Tax Expert", address: "320 23rd St, Arlington, VA, 22202 USA", contactEmail: "info@tax-expert.pro" } }));
+    res.render("terms-of-services", { company: { name: "Tax Expert", address: "320 23rd St, Arlington, VA, 22202 USA", contactEmail: "info@tax-expert.pro" } }));
 app.get('/privacy', (req, res) =>
-    res.render("privacy", { company: { name: "Tax Expert", address: "320 23rd St, Arlington, VA, 22202 USA", contactEmail: "info@tax-expert.pro" } }));
+    res.render("privacy-policy", { company: { name: "Tax Expert", address: "320 23rd St, Arlington, VA, 22202 USA", contactEmail: "info@tax-expert.pro" } }));
 
 // Booking & consultation pages
 app.get('/book-now', (req, res) => res.render('book-now'));
