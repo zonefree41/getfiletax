@@ -1,8 +1,8 @@
-require('dotenv').config();
+require("dotenv").config();
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+console.log("Loaded Stripe Key:", process.env.STRIPE_SECRET_KEY?.slice(0, 10));
 const express = require('express');
 const path = require('path');
-console.log("Loaded Stripe Key:", process.env.STRIPE_SECRET_KEY?.slice(0, 10));
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const fs = require("fs");
 const multer = require("multer");
 const { S3Client } = require("@aws-sdk/client-s3");
