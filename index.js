@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
+console.log("Loaded Stripe Key:", process.env.STRIPE_SECRET_KEY?.slice(0, 10));
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const fs = require("fs");
 const multer = require("multer");
