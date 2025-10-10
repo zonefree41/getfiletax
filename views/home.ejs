@@ -7,13 +7,43 @@
     <title>Tax-Prep</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="public/css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
     <style>
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .box {
+            width: 100%;
+            /* Full width on mobile */
+        }
+
+        @media (min-width: 768px) {
+            .box {
+                width: 50%;
+                /* Two columns on tablets */
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .box {
+                width: 25%;
+                /* Four columns on desktop */
+            }
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
         .design-images {
             border-radius: 50%;
             width: 150px;
