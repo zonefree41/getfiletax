@@ -35,6 +35,11 @@ app.get('/services', (req, res) => res.render('services'));
 app.get('/faq', (req, res) => res.render('faq'));
 app.get('/sitemap', (req, res) => res.render('sitemap'));
 
+// Checkout with Stripe
+app.get('/checkout/family', (req, res) => res.render('checkout-family', { stripePublicKey: process.env.STRIPE_PUBLISHABLE_KEY }));
+app.get('/checkout/individual', (req, res) => res.render('checkout-individual', { stripePublicKey: process.env.STRIPE_PUBLISHABLE_KEY }));
+app.get('/checkout/business', (req, res) => res.render('checkout-business', { stripePublicKey: process.env.STRIPE_PUBLISHABLE_KEY }));
+
 // Terms & Privacy
 const companyInfo = {
     name: "Tax Expert",
