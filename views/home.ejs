@@ -477,6 +477,23 @@
             gap: 1rem;
         }
 
+        /* ✅ Make it responsive for small screens */
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-links {
+                justify-content: center;
+            }
+
+            .footer-left,
+            .footer-right {
+                margin-bottom: 10px;
+            }
+        }
+
         h2 {
             font-size: 2rem;
             margin-bottom: 20px;
