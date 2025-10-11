@@ -1,0 +1,24 @@
+@media (max-width: 768px) {
+    .card {
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+
+    .card {
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 1.2rem;
+    }
+}
