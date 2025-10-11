@@ -148,6 +148,22 @@ app.get('/payment', (req, res) => {
 app.get('/success', (req, res) => res.render('success'));
 app.get('/cancel', (req, res) => res.redirect('/get-started'));
 
+app.get("/admin/files", (req, res) => {
+    const uploadDir = path.join(__dirname, "public/uploads");
+
+    fs.readdir(uploadDir, (err, files) => {
+        if (err) {
+            console.error("Error reading uploads folder:", err);
+            return res.status(500).send("Error loading files");
+        }
+
+        // Filter PDFs or other allowed types
+        const pdfFiles = files.filter((f) => f.endsWith(".pdf"));
+
+        res.render("pdf", { files: pdfFiles });
+    });
+});
+
 // =================== File Upload (W-2 / 1099) ===================
 
 // =================== File Upload (Local) ===================
