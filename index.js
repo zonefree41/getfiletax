@@ -71,50 +71,59 @@ app.get('/blog1', (req, res) => res.render('blog1'));
 app.get('/blog2', (req, res) => res.render('blog2'));
 app.get('/blog3', (req, res) => res.render('blog3'));
 
-// Stripe Checkout routes
-app.post('/checkout/individual', async (req, res) => {
-    const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        line_items: [{
-            price_data: {
-                currency: 'usd',
-                product_data: { name: 'Single Filing' },
-                unit_amount: 13000 // $130.00 in cents
-            },
-            quantity: 1
-        }],
-        mode: 'payment',
-        success_url: `${process.env.BASE_URL}/success`,
-        cancel_url: `${process.env.BASE_URL}/get-started?canceled=true`
-    });
-    res.redirect(session.url);
+
+// Individual tax payment
+
+app.post("/checkout/individual", async (req, res) => {
+    try {
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: 13000, // $130.00
+            currency: "usd",
+            description: "Single Filing",
+            automatic_payment_methods: { enabled: true },
+        });
+
+        // ✅ Pass `plan` and `clientSecret` to the EJS page
+        res.render("payment", {
+            clientSecret: paymentIntent.client_secret,
+            plan: "Family"
+        });
+    } catch (err) {
+        console.error("Stripe Error:", err.message);
+        res.status(500).send("Internal Server Error: " + err.message);
+    }
 });
 
-app.post('/checkout/business', async (req, res) => {
-    const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        line_items: [{
-            price_data: {
-                currency: 'usd',
-                product_data: { name: 'Business Tax Filing' },
-                unit_amount: 25000 // $250.00 in cents
-            },
-            quantity: 1
-        }],
-        mode: 'payment',
-        success_url: `${process.env.BASE_URL}/success`,
-        cancel_url: `${process.env.BASE_URL}/get-started?canceled=true`
-    });
-    res.redirect(session.url);
+// Checkout business tax payment
+
+app.post("/checkout/business", async (req, res) => {
+    try {
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: 25000, // $250.00
+            currency: "usd",
+            description: "Business Tax Filing",
+            automatic_payment_methods: { enabled: true },
+        });
+
+        // ✅ Pass `plan` and `clientSecret` to the EJS page
+        res.render("payment", {
+            clientSecret: paymentIntent.client_secret,
+            plan: "Business"
+        });
+    } catch (err) {
+        console.error("Stripe Error:", err.message);
+        res.status(500).send("Internal Server Error: " + err.message);
+    }
 });
 
 // Family tax payment
+
 app.post("/checkout/family", async (req, res) => {
     try {
         const paymentIntent = await stripe.paymentIntents.create({
             amount: 15000, // $150.00
             currency: "usd",
-            description: "Family Tax Filing",
+            description: "Married Filing Jointly",
             automatic_payment_methods: { enabled: true },
         });
 
