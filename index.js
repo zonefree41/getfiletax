@@ -36,8 +36,6 @@ app.get('/faq', (req, res) => res.render('faq'));
 app.get('/sitemap', (req, res) => res.render('sitemap'));
 
 // Checkout with Stripe
-app.get('/checkout/individual', (req, res) => res.render('checkout-individual', { stripePublicKey: process.env.STRIPE_PUBLISHABLE_KEY }));
-app.get('/checkout/business', (req, res) => res.render('checkout-business', { stripePublicKey: process.env.STRIPE_PUBLISHABLE_KEY }));
 
 // Terms & Privacy
 const companyInfo = {
@@ -74,25 +72,10 @@ app.get('/blog3', (req, res) => res.render('blog3'));
 
 // Individual tax payment
 
-app.post("/checkout/individual", async (req, res) => {
-    try {
-        const paymentIntent = await stripe.paymentIntents.create({
-            amount: 13000, // $130.00
-            currency: "usd",
-            description: "Single Filing",
-            automatic_payment_methods: { enabled: true },
-        });
-
-        // ✅ Pass `plan` and `clientSecret` to the EJS page
-        res.render("payment", {
-            clientSecret: paymentIntent.client_secret,
-            plan: "Family"
-        });
-    } catch (err) {
-        console.error("Stripe Error:", err.message);
-        res.status(500).send("Internal Server Error: " + err.message);
-    }
+app.get("/checkout/individual", async (req, res) => {
+    res.redirect("https://buy.stripe.com/dRmdR8awJ1El8v84Z6e3e01");
 });
+
 
 // Checkout business tax payment
 
