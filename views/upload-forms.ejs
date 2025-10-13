@@ -2,238 +2,317 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
-    <title>Upload Documents</title>
+  <meta charset="utf-8" />
+  <title>Upload Documents</title>
 </head>
 
 <style>
-    :root{
-  --bg: #f6f8fb;
-  --card: #ffffff;
-  --accent: #0ea5a4; /* teal */
-  --muted: #6b7280;
-  --shadow: 0 6px 20px rgba(14, 165, 164, 0.08);
-  --radius: 12px;
-  --max-width: 760px;
-  --gap: 1.25rem;
-  --button-hover: #047f7d;
-  font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-}
+  :root {
+    --bg: #f6f8fb;
+    --card: #ffffff;
+    --accent: #0ea5a4;
+    /* teal */
+    --muted: #6b7280;
+    --shadow: 0 6px 20px rgba(14, 165, 164, 0.08);
+    --radius: 12px;
+    --max-width: 760px;
+    --gap: 1.25rem;
+    --button-hover: #047f7d;
+    font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
 
-*{box-sizing: border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  background: linear-gradient(180deg,#eef2f6 0%,var(--bg) 100%);
-  color:#0f172a;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:48px 20px;
-  font-size:16px;
-  line-height:1.45;
-}
+  * {
+    box-sizing: border-box
+  }
 
-/* Card */
-.upload-card{
-  width:100%;
-  max-width:var(--max-width);
-  background:var(--card);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:32px;
-  border:1px solid rgba(15,23,42,0.03);
-}
+  html,
+  body {
+    height: 100%
+  }
 
-/* Header */
-.upload-card h1{
-  margin:0 0 8px 0;
-  font-size:22px;
-  letter-spacing:-0.2px;
-}
-.upload-card p.lead{
-  margin:0 0 20px 0;
-  color:var(--muted);
-  font-size:14px;
-}
+  body {
+    margin: 0;
+    background: linear-gradient(180deg, #eef2f6 0%, var(--bg) 100%);
+    color: #0f172a;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 20px;
+    font-size: 16px;
+    line-height: 1.45;
+  }
 
-/* Form */
-.upload-form{
-  display:grid;
-  gap:var(--gap);
-  align-items:start;
-}
+  /* Card */
+  .upload-card {
+    width: 100%;
+    max-width: var(--max-width);
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 32px;
+    border: 1px solid rgba(15, 23, 42, 0.03);
+  }
 
-.field-label{
-  display:block;
-  font-weight:600;
-  color:#0b1220;
-  margin-bottom:6px;
-  font-size:14px;
-}
+  /* Header */
+  .upload-card h1 {
+    margin: 0 0 8px 0;
+    font-size: 22px;
+    letter-spacing: -0.2px;
+  }
 
-/* Custom file input look */
-.file-drop {
-  border: 2px dashed rgba(15,23,42,0.08);
-  border-radius:10px;
-  padding:18px;
-  text-align:center;
-  background: linear-gradient(180deg, rgba(14,165,164,0.02), transparent);
-  transition: all .18s ease;
-  cursor: pointer;
-}
-.file-drop:hover{ transform: translateY(-2px); box-shadow: 0 10px 30px rgba(2,6,23,0.04); }
-.file-drop .muted{ color:var(--muted); font-size:14px; }
-.file-input {
-  appearance:none;
-  -webkit-appearance:none;
-  display:none; /* hide the native input - clicking the .file-drop triggers it via JS */
-}
+  .upload-card p.lead {
+    margin: 0 0 20px 0;
+    color: var(--muted);
+    font-size: 14px;
+  }
 
-/* Selected files list */
-.file-list{
-  margin:0;
-  padding:0;
-  list-style:none;
-  font-size:14px;
-  color:#0b1220;
-}
-.file-list li{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  padding:8px 10px;
-  border-radius:8px;
-  background:#f8fafc;
-  border:1px solid rgba(15,23,42,0.03);
-  margin-top:8px;
-}
-.file-name{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:70%;}
-.file-size{ color:var(--muted); font-size:13px; }
+  /* Form */
+  .upload-form {
+    display: grid;
+    gap: var(--gap);
+    align-items: start;
+  }
 
-/* Button */
-.btn{
-  display:inline-flex;
-  gap:10px;
-  align-items:center;
-  justify-content:center;
-  padding:12px 18px;
-  border-radius:10px;
-  background:var(--accent);
-  color:white;
-  font-weight:600;
-  border:none;
-  cursor:pointer;
-  transition: background .15s ease, transform .06s ease;
-  text-decoration:none;
-}
-.btn:hover{ background:var(--button-hover); transform:translateY(-1px); }
-.btn:active{ transform:translateY(0) }
-.btn.secondary{
-  background:#f3f4f6;
-  color:#0f172a;
-  border:1px solid rgba(15,23,42,0.04);
-}
+  .field-label {
+    display: block;
+    font-weight: 600;
+    color: #0b1220;
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
 
-/* Note text */
-.note{ color:var(--muted); font-size:13px; margin-top:6px; }
+  /* Custom file input look */
+  .file-drop {
+    border: 2px dashed rgba(15, 23, 42, 0.08);
+    border-radius: 10px;
+    padding: 18px;
+    text-align: center;
+    background: linear-gradient(180deg, rgba(14, 165, 164, 0.02), transparent);
+    transition: all .18s ease;
+    cursor: pointer;
+  }
 
-/* Responsive */
-@media (max-width:560px){
-  .upload-card{ padding:20px; }
-  :root{ --max-width: 95vw; }
-}
-        nav {
-            background: #0a4b9b;
-            padding: 15px 20px;
-            border-radius: 12px 12px 0 0;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+  .file-drop:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(2, 6, 23, 0.04);
+  }
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-right: 15px;
-            font-weight: bold;
-        }
+  .file-drop .muted {
+    color: var(--muted);
+    font-size: 14px;
+  }
 
-        nav a:hover {
-            text-decoration: underline;
-            color: #52ab98;
-        }
+  .file-input {
+    appearance: none;
+    -webkit-appearance: none;
+    display: none;
+    /* hide the native input - clicking the .file-drop triggers it via JS */
+  }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
+  /* Selected files list */
+  .file-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 14px;
+    color: #0b1220;
+  }
 
-        h1, h2, h3 {
-            color: #0a4b9b;
-        }
+  .file-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: #f8fafc;
+    border: 1px solid rgba(15, 23, 42, 0.03);
+    margin-top: 8px;
+  }
 
-        h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
+  .file-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 70%;
+  }
 
-        h2 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
+  .file-size {
+    color: var(--muted);
+    font-size: 13px;
+  }
 
-        h3 {
-            font-size: 20px;
-            margin-bottom: 8px;
-        }
+  /* Button */
+  .btn {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 18px;
+    border-radius: 10px;
+    background: var(--accent);
+    color: white;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background .15s ease, transform .06s ease;
+    text-decoration: none;
+  }
 
-        .footer {
-            text-align: center;
-            padding: 15px;
-            background: #0a4b9b;
-            color: white;
-            margin-top: 40px;
-            border-radius: 0 0 12px 12px;
-        }
+  .btn:hover {
+    background: var(--button-hover);
+    transform: translateY(-1px);
+  }
+
+  .btn:active {
+    transform: translateY(0)
+  }
+
+  .btn.secondary {
+    background: #f3f4f6;
+    color: #0f172a;
+    border: 1px solid rgba(15, 23, 42, 0.04);
+  }
+
+  /* Note text */
+  .note {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 6px;
+  }
+
+  /* Responsive */
+  @media (max-width:560px) {
+    .upload-card {
+      padding: 20px;
+    }
+
+    :root {
+      --max-width: 95vw;
+    }
+  }
+
+  nav {
+    background: #0a4b9b;
+    padding: 15px 20px;
+    border-radius: 12px 12px 0 0;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  nav a {
+    color: white;
+    text-decoration: none;
+    margin-right: 15px;
+    font-weight: bold;
+  }
+
+  nav a:hover {
+    text-decoration: underline;
+    color: #52ab98;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: #0a4b9b;
+  }
+
+  h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  /* Position the button near the bottom */
+  .back-home-footer {
+    position: fixed;
+    bottom: 30px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 100;
+  }
+
+  .back-home-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #007BFF, #00C4CC);
+    color: white;
+    font-weight: 600;
+    padding: 12px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+  }
+
+  .back-home-btn:hover {
+    background: linear-gradient(135deg, #0056b3, #009ba8);
+    transform: translateY(-2px);
+  }
+
+  /* ✅ Mobile responsive adjustments */
+  @media (max-width: 600px) {
+    .back-home-btn {
+      width: 80%;
+      padding: 14px 0;
+      font-size: 16px;
+    }
+  }
 </style>
 
 <body>
-    <div class="upload-card" role="region" aria-label="Upload documents">
-        <h1>Upload Your W-2 / 1099 Documents</h1>
-        <p class="lead">Please upload your tax documents (W-2, 1099, etc.) securely below. Supported formats: PDF, PNG,
-            JPG. You can select multiple files.</p>
+  <div class="upload-card" role="region" aria-label="Upload documents">
+    <h1>Upload Your W-2 / 1099 Documents</h1>
+    <p class="lead">Please upload your tax documents (W-2, 1099, etc.) securely below. Supported formats: PDF, PNG,
+      JPG. You can select multiple files.</p>
 
-        <form id="uploadForm" class="upload-form" action="/upload-forms" method="POST" enctype="multipart/form-data">
-            <div>
-                <label class="field-label" for="documents">Select files</label>
+    <form id="uploadForm" class="upload-form" action="/upload-forms" method="POST" enctype="multipart/form-data">
+      <div>
+        <label class="field-label" for="documents">Select files</label>
 
-                <label class="file-drop" for="documents" id="dropZone">
-                    <div class="muted">Click here or drag & drop files</div>
-                    <div class="muted" style="font-size:13px;margin-top:6px;">Maximum 10 files • max 10MB each</div>
-                </label>
+        <label class="file-drop" for="documents" id="dropZone">
+          <div class="muted">Click here or drag & drop files</div>
+          <div class="muted" style="font-size:13px;margin-top:6px;">Maximum 10 files • max 10MB each</div>
+        </label>
 
-                <input class="file-input" id="documents" name="documents" type="file" accept=".pdf,image/*" multiple
-                    required>
-                <ul id="fileList" class="file-list" aria-live="polite"></ul>
-            </div>
+        <input class="file-input" id="documents" name="documents" type="file" accept=".pdf,image/*" multiple required>
+        <ul id="fileList" class="file-list" aria-live="polite"></ul>
+      </div>
 
-            <div>
-                <button type="submit" class="btn">Upload Files</button>
-                <a href="/home" class="btn secondary" style="margin-left:10px;">Cancel</a>
-                <p class="note">Note: files are uploaded securely to our storage. If you have many files, compress to a
-                    single PDF or use a stable connection.</p>
-            </div>
-        </form>
-    </div>
+      <div>
+        <button type="submit" class="btn">Upload Files</button>
+        <a href="/home" class="btn secondary" style="margin-left:10px;">Cancel</a>
+        <p class="note">Note: files are uploaded securely to our storage. If you have many files, compress to a
+          single PDF or use a stable connection.</p>
+        <div class="back-home-container">
+          <a href="/" class="back-home-btn">← Back to Home</a>
+        </div>
+      </div>
+    </form>
+  </div>
 
 </body>
 
