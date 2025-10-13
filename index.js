@@ -118,23 +118,26 @@ app.post("/checkout/business", async (req, res) => {
 
 // Family tax payment
 
-app.post('/checkout/family', async (req, res) => {
-    const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        line_items: [{
-            price_data: {
-                currency: 'usd',
-                product_data: { name: 'Married Filing Jointly' },
-                unit_amount: 15000 // $150.00 in cents
-            },
-            quantity: 1
-        }],
-        mode: 'payment',
-        success_url: `${process.env.BASE_URL}/success`,
-        cancel_url: `${process.env.BASE_URL}/get-started?canceled=true`
-    });
-    res.redirect(session.url);
+app.post("/checkout/family", async (req, res) => {
+    try {
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: 15000, // $150.00
+            currency: "usd",
+            description: "Married Filing Jointly",
+            automatic_payment_methods: { enabled: true },
+        });
+
+        // ✅ Pass `plan` and `clientSecret` to the EJS page
+        res.render("payment", {
+            clientSecret: paymentIntent.client_secret,
+            plan: "Family"
+        });
+    } catch (err) {
+        console.error("Stripe Error:", err.message);
+        res.status(500).send("Internal Server Error: " + err.message);
+    }
 });
+
 
 
 app.get('/payment', (req, res) => {
