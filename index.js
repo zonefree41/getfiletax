@@ -69,6 +69,14 @@ app.get('/blog1', (req, res) => res.render('blog1'));
 app.get('/blog2', (req, res) => res.render('blog2'));
 app.get('/blog3', (req, res) => res.render('blog3'));
 
+app.use((req, res, next) => {
+    if (req.headers["x-forwarded-proto"] !== "https") {
+        return res.redirect("https://" + req.headers.host + req.url);
+    }
+    next();
+});
+
+
 
 // Individual tax payment
 
