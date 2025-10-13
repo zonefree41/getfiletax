@@ -77,26 +77,10 @@ app.get("/checkout/individual", async (req, res) => {
 });
 
 
-// Checkout business tax payment
+// Business tax payment
 
-app.post("/checkout/business", async (req, res) => {
-    try {
-        const paymentIntent = await stripe.paymentIntents.create({
-            amount: 25000, // $250.00
-            currency: "usd",
-            description: "Business Tax Filing",
-            automatic_payment_methods: { enabled: true },
-        });
-
-        // ✅ Pass `plan` and `clientSecret` to the EJS page
-        res.render("payment", {
-            clientSecret: paymentIntent.client_secret,
-            plan: "Business"
-        });
-    } catch (err) {
-        console.error("Stripe Error:", err.message);
-        res.status(500).send("Internal Server Error: " + err.message);
-    }
+app.get("/checkout/business", async (req, res) => {
+    res.redirect("https://buy.stripe.com/6oU28q5cp1Elh1Ecrye3e02");
 });
 
 // Family tax payment
