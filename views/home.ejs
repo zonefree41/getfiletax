@@ -14,6 +14,47 @@
 
 <body>
     <style>
+        .footer-nav {
+            background: #f8f8f8;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        .footer-nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            /* allows wrapping on small screens */
+            gap: 15px;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-nav li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .footer-nav li a:hover {
+            color: #007BFF;
+        }
+
+        /* ✅ Make it responsive */
+        @media (max-width: 600px) {
+            .footer-nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .footer-nav li a {
+                font-size: 16px;
+            }
+        }
+
         .design-images {
             border-radius: 50%;
             width: 150px;
@@ -801,7 +842,7 @@
     </section>
 
     <footer>
-        <nav>
+        <nav class="footer-nav">
             <ul>
                 <li><a href="/privacy">Privacy Policy</a></li>
                 <li><a href="/terms">Terms of Services</a></li>
