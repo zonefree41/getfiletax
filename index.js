@@ -62,6 +62,7 @@ app.get('/get-started', (req, res) => res.render('get-started'));
 app.get('/payment', (req, res) => res.render('payment'));
 app.get('/book', (req, res) => res.render('book'));
 app.get('/explore', (req, res) => res.render('explore'));
+app.get("/requirements", (req, res) => res.render("requirements"));
 
 // Blog pages
 app.get('/blog', (req, res) => res.render('blog'));
