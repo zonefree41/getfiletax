@@ -71,11 +71,13 @@ app.get('/blog2', (req, res) => res.render('blog2'));
 app.get('/blog3', (req, res) => res.render('blog3'));
 
 app.use((req, res, next) => {
-    if (req.headers["x-forwarded-proto"] !== "https") {
+    // Don't force HTTPS when running locally
+    if (req.hostname !== "localhost" && req.headers["x-forwarded-proto"] !== "https") {
         return res.redirect("https://" + req.headers.host + req.url);
     }
     next();
 });
+
 
 
 
@@ -109,21 +111,15 @@ app.get('/payment', (req, res) => {
 app.get('/success', (req, res) => res.render('success'));
 app.get('/cancel', (req, res) => res.redirect('/get-started'));
 
-app.get("/admin/files", (req, res) => {
-    const uploadDir = path.join(__dirname, "public/uploads");
-
+app.get("/admin/uploads", (req, res) => {
+    const uploadDir = path.join(__dirname, "uploads");
     fs.readdir(uploadDir, (err, files) => {
-        if (err) {
-            console.error("Error reading uploads folder:", err);
-            return res.status(500).send("Error loading files");
-        }
-
-        // Filter PDFs or other allowed types
-        const pdfFiles = files.filter((f) => f.endsWith(".pdf"));
-
-        res.render("pdf", { files: pdfFiles });
+        if (err) return res.status(500).send("Error reading uploads folder");
+        res.render("uploads", { files });
     });
 });
+
+
 
 // Set storage engine
 const storage = multer.diskStorage({
