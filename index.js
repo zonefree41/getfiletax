@@ -125,6 +125,26 @@ app.get("/admin/files", (req, res) => {
     });
 });
 
+// Set storage engine
+const storage = multer.diskStorage({
+    destination: "./uploads/", // make sure this folder exists
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname)); // unique file name
+    }
+});
+
+// Initialize upload
+const diskUpload = multer({ storage });
+
+// Static folder to serve uploaded files
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// Your upload route
+app.post("/upload", diskUpload.single("w2form"), (req, res) => {
+    console.log("File uploaded:", req.file);
+    res.send("Upload successful!");
+});
+
 // =================== File Upload (W-2 / 1099) ===================
 
 // =================== File Upload (Local) ===================
