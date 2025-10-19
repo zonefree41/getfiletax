@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Tax Filing Rates</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .rate {
+            margin: 20px 0;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #007b00;
+        }
+
+        ul {
+            list-style: disc;
+            margin-left: 20px;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Tax Preparation Rates</h1>
+
+        <% const plans=[ { title: "Basic Filing" , price: "$300" , bullets: ["Single-member (Schedule
+            C)", "Simple expenses" , "E-file included" ] }, { title: "Family Filing" , price: "$450" , bullets:
+            ["Married filing jointly", "Dependents included" , "E-file included" ] }, { title: "Business Filing" ,
+            price: "$600" , bullets: ["LLC or S-Corp", "Multiple expenses" , "E-file included" ] } ]; %>
+
+            <% plans.forEach(plan=> { %>
+                <div class="rate">
+                    <h2>
+                        <%= plan.title %>
+                    </h2>
+                    <p class="price">
+                        <%= plan.price %>
+                    </p>
+                    <ul>
+                        <% plan.bullets.forEach(bullet=> { %>
+                            <li>
+                                <%= bullet %>
+                            </li>
+                            <% }) %>
+                    </ul>
+                </div>
+                <% }) %>
+
+                    <a href="/">← Back to Home</a>
+    </div>
+</body>
+
+</html>

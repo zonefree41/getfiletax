@@ -14,6 +14,7 @@ const app = express();
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+
 // Middleware
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
@@ -63,6 +64,22 @@ app.get('/payment', (req, res) => res.render('payment'));
 app.get('/book', (req, res) => res.render('book'));
 app.get('/explore', (req, res) => res.render('explore'));
 app.get("/requirements", (req, res) => res.render("requirements"));
+// Show the form
+app.get("/llc", (req, res) => {
+    res.render("llc");
+});
+app.get('/rates', (req, res) => {
+    res.render('rates');
+
+});
+
+// Handle form submission
+app.post("/submit-llc", (req, res) => {
+    // You can later connect this to MongoDB, email, or upload storage
+    console.log(req.body);
+    res.send("✅ Thank you! Your Aviation Mechanic LLC form has been submitted.");
+});
+
 
 // Blog pages
 app.get('/blog', (req, res) => res.render('blog'));
@@ -78,6 +95,37 @@ app.use((req, res, next) => {
     next();
 });
 
+// Assuming express is set up and EJS view engine configured:
+// const express = require('express');
+// const app = express();
+// app.set('view engine', 'ejs');
+// app.use(express.static('public'));
+
+app.get('/rate', (req, res) => {
+    // Optional: pass custom plans (overrides fallback in the template)
+    const plans = [
+        {
+            id: 'basic',
+            title: 'Basic LLC',
+            price: '$300',
+            bullets: ['Single-member (Schedule C)', 'Simple expenses', 'E-file included']
+        },
+        {
+            id: 'standard',
+            title: 'Standard LLC',
+            price: '$600',
+            bullets: ['Depreciation / home office', '1–2 owners', 'Quarterly guidance']
+        },
+        {
+            id: 'premium',
+            title: 'Premium LLC',
+            price: '$1,000+',
+            bullets: ['Multi-member / Partnership (1065)', 'S-Corp (1120-S)', 'Bookkeeping add-on available']
+        }
+    ];
+
+    res.render('rate', { plans });
+});
 
 
 
@@ -110,6 +158,8 @@ app.get('/payment', (req, res) => {
 // Payment success / cancel pages
 app.get('/success', (req, res) => res.render('success'));
 app.get('/cancel', (req, res) => res.redirect('/get-started'));
+
+
 
 app.get("/admin/uploads", (req, res) => {
     const uploadDir = path.join(__dirname, "uploads");
