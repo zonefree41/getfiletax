@@ -65,11 +65,8 @@ app.get('/book', (req, res) => res.render('book'));
 app.get('/explore', (req, res) => res.render('explore'));
 app.get("/requirements", (req, res) => res.render("requirements"));
 // Show the form
-app.get("/llc", (req, res) => {
-    res.render("llc");
-});
-app.get('/rates', (req, res) => {
-    res.render('rates');
+app.get("/rates", (req, res) => {
+    res.render("rates");
 
 });
 
@@ -95,39 +92,50 @@ app.use((req, res, next) => {
     next();
 });
 
-// Assuming express is set up and EJS view engine configured:
-// const express = require('express');
-// const app = express();
-// app.set('view engine', 'ejs');
-// app.use(express.static('public'));
+// ✅ Checkout route (handles Stripe session creation)
+app.post("/create-checkout-session", async (req, res) => {
+    const { plan } = req.body;
 
-app.get('/rate', (req, res) => {
-    // Optional: pass custom plans (overrides fallback in the template)
-    const plans = [
-        {
-            id: 'basic',
-            title: 'Basic LLC',
-            price: '$300',
-            bullets: ['Single-member (Schedule C)', 'Simple expenses', 'E-file included']
-        },
-        {
-            id: 'standard',
-            title: 'Standard LLC',
-            price: '$600',
-            bullets: ['Depreciation / home office', '1–2 owners', 'Quarterly guidance']
-        },
-        {
-            id: 'premium',
-            title: 'Premium LLC',
-            price: '$1,000+',
-            bullets: ['Multi-member / Partnership (1065)', 'S-Corp (1120-S)', 'Bookkeeping add-on available']
-        }
-    ];
+    let price;
+    if (plan === "basic") price = 30000;      // $300
+    else if (plan === "standard") price = 60000; // $600
+    else price = 100000;                        // $1,000
 
-    res.render('rate', { plans });
+    try {
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ["card"],
+            line_items: [
+                {
+                    price_data: {
+                        currency: "usd",
+                        product_data: {
+                            name: `${plan} Tax Filing Plan`,
+                        },
+                        unit_amount: price,
+                    },
+                    quantity: 1,
+                },
+            ],
+            mode: "payment",
+            success_url: "http://localhost:3000/success",
+            cancel_url: "http://localhost:3000/rates",
+        });
+
+        res.redirect(303, session.url);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
 });
 
+// ✅ Success page
+app.get("/success", (req, res) => {
+    res.send("<h2>✅ Payment successful! Thank you for choosing our tax service.</h2>");
+});
 
+// ✅ Rates page
+app.get("/rates", (req, res) => {
+    res.render("rates");
+});
 
 // Individual tax payment
 

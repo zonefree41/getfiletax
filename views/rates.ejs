@@ -1,91 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Tax Filing Rates</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-
-        .rate {
-            margin: 20px 0;
-            padding: 15px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .price {
-            font-weight: bold;
-            color: #007b00;
-        }
-
-        ul {
-            list-style: disc;
-            margin-left: 20px;
-        }
-
-        a {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>LLC Rates</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f7fafc;
+      margin: 0;
+      padding: 0;
+      color: #0f172a;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    header {
+      text-align: center;
+      padding: 30px 0;
+      background: linear-gradient(90deg, rgba(11,110,237,0.06), rgba(11,110,237,0.02));
+      margin-bottom: 20px;
+    }
+    h1 { margin-bottom: 8px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+      padding: 20px;
+      transition: transform 0.2s ease;
+    }
+    .card:hover { transform: translateY(-5px); }
+    .price { color:#0b6efd; font-weight:700; font-size:20px; margin-bottom:10px; }
+    ul { color:#6b7280; margin-left:20px; }
+    a.btn {
+      display:inline-block;
+      margin-top:12px;
+      background:#0b6efd;
+      color:#fff;
+      padding:10px 14px;
+      border-radius:8px;
+      text-decoration:none;
+      font-weight:600;
+    }
+    .notes {
+      margin-top:40px;
+      color:#6b7280;
+    }
+    .back {
+      display:inline-block;
+      margin-top:24px;
+      background:#0b6efd;
+      color:#fff;
+      padding:10px 16px;
+      border-radius:8px;
+      text-decoration:none;
+    }
+  </style>
 </head>
-
 <body>
-    <div class="container">
-        <h1>Tax Preparation Rates</h1>
+  <header>
+    <h1>LLC Tax Preparation Rates</h1>
+    <p>Transparent pricing for every business type</p>
+  </header>
 
-        <% const plans=[ { title: "Basic Filing" , price: "$300" , bullets: ["Single-member (Schedule
-            C)", "Simple expenses" , "E-file included" ] }, { title: "Family Filing" , price: "$450" , bullets:
-            ["Married filing jointly", "Dependents included" , "E-file included" ] }, { title: "Business Filing" ,
-            price: "$600" , bullets: ["LLC or S-Corp", "Multiple expenses" , "E-file included" ] } ]; %>
+  <main class="container">
+    <% 
+      // Default fallback plans
+      const fallbackPlans = [
+        {
+          id: "basic",
+          title: "Basic LLC",
+          price: "$300",
+          bullets: ["Single-member (Schedule C)", "Simple expenses", "E-file included"]
+        },
+        {
+          id: "standard",
+          title: "Standard LLC",
+          price: "$600",
+          bullets: ["Depreciation / Home office", "1–2 owners", "Quarterly guidance"]
+        },
+        {
+          id: "premium",
+          title: "Premium LLC",
+          price: "$1,000+",
+          bullets: ["Multi-member / Partnership (1065)", "S-Corp (1120-S)", "Bookkeeping add-on available"]
+        }
+      ];
 
-            <% plans.forEach(plan=> { %>
-                <div class="rate">
-                    <h2>
-                        <%= plan.title %>
-                    </h2>
-                    <p class="price">
-                        <%= plan.price %>
-                    </p>
-                    <ul>
-                        <% plan.bullets.forEach(bullet=> { %>
-                            <li>
-                                <%= bullet %>
-                            </li>
-                            <% }) %>
-                    </ul>
-                </div>
-                <% }) %>
+      const plansToShow = (typeof plans !== "undefined" && Array.isArray(plans) && plans.length)
+        ? plans
+        : fallbackPlans;
+    %>
 
-                    <a href="/">← Back to Home</a>
+    <div class="grid">
+      <% plansToShow.forEach(function(plan) { %>
+        <div class="card" id="<%= plan.id %>">
+          <h2><%= plan.title %></h2>
+          <div class="price"><%= plan.price %></div>
+          <ul>
+            <% plan.bullets.forEach(function(item) { %>
+              <li><%= item %></li>
+            <% }); %>
+          </ul>
+          <a href="/contact?plan=<%= encodeURIComponent(plan.id) %>" class="btn">Get this plan</a>
+        </div>
+      <% }); %>
     </div>
-</body>
 
+    <div class="notes">
+      <h3>Additional Services & Rates</h3>
+      <ul>
+        <li>Bookkeeping / QuickBooks help: <strong>$100–$300 / hour</strong></li>
+        <li>State filings (each): <strong>$50–$200</strong></li>
+        <li>Audit protection / representation: <strong>Available — ask for a quote</strong></li>
+      </ul>
+      <p>Prices vary by complexity, number of K-1s, payroll, and assets. Final quote provided after document review.</p>
+      <a href="/" class="back">← Back to Home</a>
+    </div>
+  </main>
+</body>
 </html>
