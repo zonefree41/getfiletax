@@ -43,12 +43,37 @@
         button:hover {
             background-color: #222;
         }
+
+        .back-home {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #333, #555);
+            color: #fff;
+            font-size: 16px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .back-home:hover {
+            background: linear-gradient(135deg, #000, #444);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        .back-home:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 
 <body>
     <h2>Request Your Tax Preparation</h2>
-    <form action="/submit-request" method="POST">
+    <form action="https://formspree.io/f/xrblvawy" method="POST">
         <label>Full Name</label>
         <input type="text" name="name" required>
 
@@ -72,5 +97,8 @@
         <button type="submit">Send Request</button>
     </form>
 </body>
+
+<a href="/" class="back-home">← Back to Home</a>
+
 
 </html>
