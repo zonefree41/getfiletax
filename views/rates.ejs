@@ -109,7 +109,11 @@
               <li><%= item %></li>
             <% }); %>
           </ul>
-          <a href="/contact?plan=<%= encodeURIComponent(plan.id) %>" class="btn">Get this plan</a>
+          <form action="/create-checkout-session" method="POST">
+  <input type="hidden" name="plan" value="<%= plan.id %>">
+  <button type="submit" class="btn">Pay <%= plan.price %></button>
+</form>
+
         </div>
       <% }); %>
     </div>

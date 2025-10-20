@@ -92,6 +92,50 @@ app.use((req, res, next) => {
     next();
 });
 
+// Show the request page
+app.get("/request", (req, res) => {
+    res.render("request");
+});
+
+// Handle form submissions
+app.post("/submit-request", (req, res) => {
+    const { name, email, phone, filingType, message } = req.body;
+
+    const newRequest = {
+        id: Date.now(),
+        name,
+        email,
+        phone,
+        filingType,
+        message,
+        date: new Date().toLocaleString()
+    };
+
+    const filePath = path.join(__dirname, "requests.json");
+    let data = [];
+
+    if (fs.existsSync(filePath)) {
+        data = JSON.parse(fs.readFileSync(filePath));
+    }
+
+    data.push(newRequest);
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+
+    res.send("<h2>✅ Your request has been sent successfully!</h2><a href='/request'>Back</a>");
+});
+
+app.get("/admin/requests", (req, res) => {
+    const filePath = path.join(__dirname, "requests.json");
+    let data = [];
+
+    if (fs.existsSync(filePath)) {
+        data = JSON.parse(fs.readFileSync(filePath));
+    }
+
+    res.render("admin-requests", { requests: data });
+});
+
+
 // ✅ Checkout route (handles Stripe session creation)
 app.post("/create-checkout-session", async (req, res) => {
     const { plan } = req.body;

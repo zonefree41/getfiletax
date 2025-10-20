@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Tax Preparation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f8f8;
+            padding: 40px;
+        }
+
+        form {
+            background: #fff;
+            max-width: 500px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 8px;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #222;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Request Your Tax Preparation</h2>
+    <form action="/submit-request" method="POST">
+        <label>Full Name</label>
+        <input type="text" name="name" required>
+
+        <label>Email</label>
+        <input type="email" name="email" required>
+
+        <label>Phone Number</label>
+        <input type="text" name="phone" required>
+
+        <label>Type of Tax Filing</label>
+        <select name="filingType" required>
+            <option value="">-- Choose --</option>
+            <option value="Individual 1040">Individual 1040</option>
+            <option value="Business LLC">Business LLC</option>
+            <option value="Partnership">Partnership</option>
+        </select>
+
+        <label>Message / Notes</label>
+        <textarea name="message" rows="4" placeholder="Write details here..."></textarea>
+
+        <button type="submit">Send Request</button>
+    </form>
+</body>
+
+</html>
