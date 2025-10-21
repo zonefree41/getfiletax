@@ -162,7 +162,7 @@ app.post("/create-checkout-session", async (req, res) => {
             ],
             mode: "payment",
             success_url: "http://localhost:3000/success",
-            cancel_url: "http://localhost:3000/rates",
+            cancel_url: "http://www.getfiletax.com/rates",
         });
 
         res.redirect(303, session.url);
