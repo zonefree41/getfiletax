@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const session = require('express-session');
 const MongoStore = require("connect-mongo");
 const { MongoClient, objectId } = require('mongodb');
+const mongoose = require('mongoose');
 const path = require('path');
 const fs = require("fs");
 const multer = require("multer");
@@ -19,6 +20,10 @@ const dbName = "taxApp";
 // View engine setup
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+
+mongoose.connect(process.env.MONGODB_URI)
+    .then(() => console.log("✅ MongoDB connected"))
+    .catch(err => console.error("MongoDB connection error:", err));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
