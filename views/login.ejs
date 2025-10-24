@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Client Login</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+            text-align: center;
+            padding: 50px;
+        }
+
+        form {
+            background: #fff;
+            padding: 20px;
+            display: inline-block;
+            border-radius: 10px;
+        }
+
+        input {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            width: 80%;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+
+        /* Position the button near the bottom */
+        .back-home-footer {
+            position: fixed;
+            bottom: 30px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            z-index: 100;
+        }
+
+        .back-home-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #007BFF, #00C4CC);
+            color: white;
+            font-weight: 600;
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            position: fixed;
+            bottom: 30px;
+        }
+
+        .back-home-btn:hover {
+            background: linear-gradient(135deg, #0056b3, #009ba8);
+            transform: translateY(-2px);
+        }
+
+        /* ✅ Mobile responsive adjustments */
+        @media (max-width: 600px) {
+            .back-home-btn {
+                width: 80%;
+                padding: 14px 0;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Client Login</h2>
+    <form method="POST" action="/login">
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <button type="submit">Sign In</button>
+    </form>
+    <div>
+        <a href="/signup">Don't have an account? Sign up</a>
+    </div>
+
+    <div class="back-home-container">
+        <a href="/home" class="back-home-btn">← Back to Home</a>
+    </div>
+
+</body>
+
+</html>

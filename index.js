@@ -2,6 +2,10 @@ require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 console.log("Loaded Stripe Key:", process.env.STRIPE_SECRET_KEY?.slice(0, 10));
 const express = require('express');
+const bcrypt = require('bcrypt');
+const session = require('express-session');
+const MongoStore = require("connect-mongo");
+const { MongoClient, objectId } = require('mongodb');
 const path = require('path');
 const fs = require("fs");
 const multer = require("multer");
@@ -9,10 +13,169 @@ const { S3Client } = require("@aws-sdk/client-s3");
 const multerS3 = require("multer-s3");
 
 const app = express();
+const dbName = "taxApp";
+
 
 // View engine setup
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+const client = new MongoClient(process.env.MONGODB_URI);
+
+// index.js (only the new/changed parts)
+
+const { sendMail, completionEmailHTML } = require("./mail"); // ⬅️ import helper
+
+// ===== SIGN UP ROUTES =====
+
+// Show sign-up page
+app.get("/signup", (req, res) => {
+    res.render("signup");
+});
+
+// Handle new user signup
+app.post("/signup", async (req, res) => {
+    try {
+        const { name, email, password } = req.body;
+        const usersCol = client.db("taxApp").collection("users");
+
+        // Check if user already exists
+        const existing = await usersCol.findOne({ email });
+        if (existing) {
+            return res.send("User already exists. Please log in instead.");
+        }
+
+        // Hash password before saving
+        const hashed = await bcrypt.hash(password, 10);
+
+        // Create new user
+        const newUser = {
+            name,
+            email,
+            password: hashed,
+            taxStatus: "pending", // default status
+        };
+
+        await usersCol.insertOne(newUser);
+
+        // Auto-login
+        req.session.user = newUser;
+        res.redirect("/dashboard");
+    } catch (err) {
+        console.error("Signup error:", err);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+
+// session
+app.use(
+    session({
+        secret: "supersecret",
+        resave: false,
+        saveUninitialized: false,
+        store: MongoStore.create({
+            mongoUrl: process.env.MONGODB_URI,
+        }),
+    })
+);
+
+// connect DB
+async function connectDB() {
+    await client.connect();
+    console.log("✅ MongoDB connected");
+}
+connectDB();
+
+// Middleware to protect routes
+function requireLogin(req, res, next) {
+    if (!req.session.user) return res.redirect("/login");
+    next();
+}
+
+// Routes
+app.post("/login", async (req, res) => {
+    const { email, password } = req.body;
+    const user = await client.db(dbName).collection("users").findOne({ email });
+    if (user && (await bcrypt.compare(password, user.password))) {
+        req.session.user = user;
+        return res.redirect("/dashboard");
+    }
+    res.send("Invalid email or password");
+});
+
+app.get("/dashboard", requireLogin, (req, res) => {
+    res.render("dashboard", { user: req.session.user });
+});
+
+app.get("/logout", (req, res) => {
+    req.session.destroy(() => res.redirect("/login"));
+});
+
+// Show admin login page
+app.get("/admin", (req, res) => {
+    res.render("admin-login");
+});
+
+// Handle admin login form submission
+app.post("/admin", (req, res) => {
+    const { username, password } = req.body;
+
+    if (username === "admin" && password === "Ethiopia5@") {
+        req.session.admin = true;
+        return res.redirect("/admin/dashboard");
+    }
+
+    res.send("Invalid admin credentials");
+});
+
+// ✅ Mark client as completed
+app.post("/admin/mark-complete/:id", async (req, res) => {
+    try {
+        const { ObjectId } = require("mongodb");
+        const userId = req.params.id;
+
+        // Update the client's tax status
+        await client
+            .db("taxApp")
+            .collection("users")
+            .updateOne(
+                { _id: new ObjectId(userId) },
+                { $set: { taxStatus: "completed" } }
+            );
+
+        console.log(`✅ Marked client ${userId} as completed`);
+        res.redirect("/admin/dashboard");
+    } catch (err) {
+        console.error("Error marking complete:", err);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+
+// Show admin dashboard
+app.get("/admin/dashboard", async (req, res) => {
+    if (!req.session.admin) return res.redirect("/admin");
+    const users = await client.db("taxApp").collection("users").find().toArray();
+    res.render("admin-dashboard", { users });
+});
+
+
+// seed demo user (optional)
+app.get("/seed", async (req, res) => {
+    const hashed = await bcrypt.hash("client123", 10);
+    await client.db(dbName).collection("users").insertOne({
+        name: "John Doe",
+        email: "john@example.com",
+        password: hashed,
+        taxStatus: "pending",
+    });
+    res.send("Seeded sample client: john@example.com / client123");
+});
+
 
 
 // Middleware

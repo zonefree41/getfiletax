@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <style>
+    body { font-family: Arial; margin:40px; background:#f8f8f8; }
+    table { width:100%; border-collapse:collapse; }
+    th, td { padding:10px; border:1px solid #ccc; text-align:left; }
+    form { display:inline; }
+    button { background:green; color:#fff; border:none; padding:5px 10px; border-radius:4px; }
+  </style>
+</head>
+<body>
+  <h2>Admin Dashboard</h2>
+  <table>
+    <tr><th>Name</th><th>Email</th><th>Status</th><th>Action</th></tr>
+    <% users.forEach(u => { %>
+      <tr>
+        <td><%= u.name %></td>
+        <td><%= u.email %></td>
+        <td><%= u.taxStatus %></td>
+        <td>
+          <% if (u.taxStatus !== "completed") { %>
+            <form method="POST" action="/admin/mark-complete/<%= u._id %>">
+              <button>Mark Complete</button>
+            </form>
+          <% } else { %>✅ Completed<% } %>
+        </td>
+      </tr>
+    <% }) %>
+  </table>
+</body>
+</html>

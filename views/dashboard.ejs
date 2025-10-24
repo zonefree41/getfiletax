@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <style>
+    body { font-family: Arial; background:#f0f0f0; text-align:center; padding:40px; }
+    .status { font-size:1.2em; margin-top:20px; }
+    .complete { color:green; font-weight:bold; }
+    .pending { color:orange; font-weight:bold; }
+  </style>
+</head>
+<body>
+  <h2>Welcome, <%= user.name %></h2>
+  <p class="status">
+    Status:
+    <% if (user.taxStatus === "completed") { %>
+      <span class="complete">✅ Your tax return has been completed.</span>
+    <% } else { %>
+      <span class="pending">⏳ Your tax return is still in progress.</span>
+    <% } %>
+  </p>
+  <a href="/logout">Logout</a>
+</body>
+</html>
