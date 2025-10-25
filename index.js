@@ -18,9 +18,9 @@ const dbName = "taxApp";
 // View engine setup
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 
 // index.js (only the new/changed parts)
 
@@ -68,34 +68,38 @@ app.post("/signup", async (req, res) => {
 });
 
 
-// Debugging
+// ✅ Connect to MongoDB first
+
+// Debug
 console.log("DEBUG: MONGO_URI =", process.env.MONGO_URI);
 
-// ✅ Connect to MongoDB first
 async function startServer() {
     try {
         const uri = process.env.MONGO_URI;
         if (!uri) throw new Error("❌ MONGO_URI is undefined!");
+
+        // Connect to MongoDB first
         await mongoose.connect(uri);
         console.log("✅ MongoDB connected successfully!");
-    } catch (error) {
+          } catch (error) {
         console.error("❌ MongoDB connection failed:", error);
     }
 }
 
 startServer();
 
-// ✅ Initialize sessions *after* mongoose connection is ready
+// ✅ Use mongoURL instead of client (simpler for Render)
 app.use(
     session({
         secret: process.env.SESSION_SECRET || "taxSecretKey",
         resave: false,
         saveUninitialized: false,
         store: MongoStore.create({
-            client: mongoose.connection.getClient(),
+            mongoUrl: process.env.MONGO_URI, // use this , not client
             collectionName: "sessions",
         }),
         cookie: {
+            secure: process.env.NODE_ENV === "production", // use secure cookies in production
             maxAge: 1000 * 60 * 60 * 24, // 1 day
         },
     })
