@@ -80,6 +80,33 @@ async function startServer() {
 
         await mongoose.connect(uri);
         console.log("✅ MongoDB connected successfully!");
+
+        // ✅ Use mongoURL instead of client (simpler for Render)
+        app.use(
+            session({
+                secret: process.env.SESSION_SECRET || "taxSecretKey",
+                resave: false,
+                saveUninitialized: false,
+                store: MongoStore.create({
+                    mongoUrl: process.env.MONGO_URI, // use this , not client
+                    collectionName: "sessions",
+                }),
+                cookie: {
+                    secure: process.env.NODE_ENV === "production", // use secure cookies in production
+                    maxAge: 1000 * 60 * 60 * 24, // 1 day
+                },
+            })
+        );
+
+        app.get("/", (req, res) => res.render("home"));
+
+        // =================== Start Server ===================
+
+        const PORT = process.env.PORT || 3000;
+        app.listen(PORT, () => {
+            console.log(`🚀 Server running on http://localhost:${PORT}`);
+        });
+
     } catch (err) {
         console.error("❌ MongoDB connection failed:");
         console.error(err.message || err);
@@ -88,25 +115,6 @@ async function startServer() {
 
 // Call the function
 startServer();
-
-// ✅ Use mongoURL instead of client (simpler for Render)
-app.use(
-    session({
-        secret: process.env.SESSION_SECRET || "taxSecretKey",
-        resave: false,
-        saveUninitialized: false,
-        store: MongoStore.create({
-            mongoUrl: process.env.MONGO_URI, // use this , not client
-            collectionName: "sessions",
-        }),
-        cookie: {
-            secure: process.env.NODE_ENV === "production", // use secure cookies in production
-            maxAge: 1000 * 60 * 60 * 24, // 1 day
-        },
-    })
-);
-
-app.get("/", (req, res) => res.render("home"));
 
 
 // Example home route
@@ -501,10 +509,6 @@ app.post("/upload-forms-s3", upload.array("documents", 10), (req, res) => {
 // Serve local uploads folder (optional, only works if using local storage)
 app.use("/uploads", express.static(path.join(__dirname, 'uploads')));
 
-// =================== Start Server ===================
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
-});
+
 
 
