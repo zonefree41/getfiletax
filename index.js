@@ -1,12 +1,9 @@
 require("dotenv").config();
-console.log("DEBUG: MONGO_URI =", process.env.MONGODB_URI);
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-console.log("Loaded Stripe Key:", process.env.STRIPE_SECRET_KEY?.slice(0, 10));
 const express = require('express');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const MongoStore = require("connect-mongo");
-const { MongoClient, objectId } = require('mongodb');
 const mongoose = require('mongoose');
 const path = require('path');
 const fs = require("fs");
@@ -22,14 +19,8 @@ const dbName = "taxApp";
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-mongoose.connect(process.env.MONGODB_URI)
-    .then(() => console.log("✅ MongoDB connected"))
-    .catch(err => console.error("MongoDB connection error:", err));
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-const client = new MongoClient(process.env.MONGODB_URI);
 
 // index.js (only the new/changed parts)
 
@@ -77,24 +68,46 @@ app.post("/signup", async (req, res) => {
 });
 
 
-// session
+// Debugging
+console.log("DEBUG: MONGO_URI =", process.env.MONGO_URI);
+
+// ✅ Connect to MongoDB first
+async function startServer() {
+    try {
+        const uri = process.env.MONGO_URI;
+        if (!uri) throw new Error("❌ MONGO_URI is undefined!");
+        await mongoose.connect(uri);
+        console.log("✅ MongoDB connected successfully!");
+    } catch (error) {
+        console.error("❌ MongoDB connection failed:", error);
+    }
+}
+
+startServer();
+
+// ✅ Initialize sessions *after* mongoose connection is ready
 app.use(
     session({
-        secret: "supersecret",
+        secret: process.env.SESSION_SECRET || "taxSecretKey",
         resave: false,
         saveUninitialized: false,
         store: MongoStore.create({
-            mongoUrl: process.env.MONGODB_URI,
+            client: mongoose.connection.getClient(),
+            collectionName: "sessions",
         }),
+        cookie: {
+            maxAge: 1000 * 60 * 60 * 24, // 1 day
+        },
     })
 );
 
-// connect DB
-async function connectDB() {
-    await client.connect();
-    console.log("✅ MongoDB connected");
-}
-connectDB();
+app.get("/", (req, res) => res.render("home"));
+
+
+// Example home route
+app.get("/", (req, res) => {
+    res.send("Server running and connected to MongoDB!");
+});
 
 // Middleware to protect routes
 function requireLogin(req, res, next) {
