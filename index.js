@@ -109,7 +109,7 @@ async function startServer() {
 
     } catch (err) {
         console.error("❌ MongoDB connection failed:");
-        console.error(err.message || err);
+        console.error("Full error object:", err);
     }
 }
 
@@ -119,7 +119,7 @@ startServer();
 
 // Example home route
 app.get("/", (req, res) => {
-    res.send("Server running and connected to MongoDB!");
+    res.send("home");
 });
 
 // Middleware to protect routes
