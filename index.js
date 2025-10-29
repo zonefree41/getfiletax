@@ -300,7 +300,7 @@ startServer();
 
 // Example home route
 app.get("/", (req, res) => {
-    res.send("home");
+    res.redirect("/home");
 });
 
 // Middleware to protect routes
