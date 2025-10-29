@@ -21,6 +21,17 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+const userSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    rresetToken: String,
+    resetTokenExpiry: Date,
+    taxStatus: { type: String, default: "pending" },
+});
+
+
+const User = mongoose.model("User", userSchema);
 
 // index.js (only the new/changed parts)
 
@@ -33,39 +44,209 @@ app.get("/signup", (req, res) => {
     res.render("signup");
 });
 
+app.get("/login", (req, res) => {
+    res.render("login");
+});
+
 // Handle new user signup
 app.post("/signup", async (req, res) => {
     try {
         const { name, email, password } = req.body;
-        const usersCol = client.db("taxApp").collection("users");
 
         // Check if user already exists
-        const existing = await usersCol.findOne({ email });
-        if (existing) {
-            return res.send("User already exists. Please log in instead.");
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).send("Email already registered. Please log in.");
         }
 
-        // Hash password before saving
-        const hashed = await bcrypt.hash(password, 10);
+        const bcrypt = require("bcryptjs");
+        const hashedPassword = await bcrypt.hash(password, 10);
+        user.password = hashedPassword;
 
-        // Create new user
-        const newUser = {
-            name,
-            email,
-            password: hashed,
-            taxStatus: "pending", // default status
-        };
 
-        await usersCol.insertOne(newUser);
+        // ✅ Create a new user
+        const newUser = new User({ name, email, password: hashedPassword });
+        await newUser.save();
 
-        // Auto-login
+        console.log("✅ New user registered:", email);
+
+        // ✅ Optionally store in session
         req.session.user = newUser;
+
+        // Redirect to dashboard or login
         res.redirect("/dashboard");
     } catch (err) {
         console.error("Signup error:", err);
+        res.status(500).send("Internal Server Error during signup");
+    }
+});
+
+const nodemailer = require("nodemailer");
+const crypto = require("crypto");
+
+app.post("/forgot-password", async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        // Check if user exists
+        const user = await mongoose.connection.db.collection("users").findOne({ email });
+        if (!user) return res.status(404).send("No account found with that email.");
+
+        // Generate reset token
+        const token = crypto.randomBytes(32).toString("hex");
+
+        // Save token with expiration (1 hour)
+        await mongoose.connection.db.collection("users").updateOne(
+            { email },
+            { $set: { resetToken: token, resetTokenExp: Date.now() + 3600000 } }
+        );
+
+        // ✅ Configure SendGrid transporter
+        const transporter = nodemailer.createTransport({
+            host: "smtp.sendgrid.net",
+            port: 587,
+            auth: {
+                user: "apikey", // required by SendGrid
+                pass: process.env.SENDGRID_API_KEY, // stored in .env
+            },
+        });
+
+        // Reset link
+        const resetLink = `https://www.getfiletax.com/reset-password/${token}`;
+
+        // Send reset email
+        await transporter.sendMail({
+            from: process.env.EMAIL_FROM || "taxsupport@getfiletax.com",
+            to: email,
+            subject: "Reset Your Password",
+            html: `
+        <div style="font-family:Arial, sans-serif; max-width:500px; margin:auto; padding:20px; border:1px solid #eee; border-radius:8px;">
+          <h2 style="color:#007bff;">TaxPrep Password Reset</h2>
+          <p>Hello ${user.name || "there"},</p>
+          <p>We received a request to reset your password. Click below to choose a new one:</p>
+          <a href="${resetLink}" style="display:inline-block; background:#007bff; color:white; padding:10px 20px; border-radius:5px; text-decoration:none;">Reset Password</a>
+          <p style="margin-top:20px; color:#666;">If you didn’t request this, ignore this message.</p>
+          <hr>
+          <p style="font-size:12px; color:#999;">© ${new Date().getFullYear()} TaxPrep | Secure Tax Filing</p>
+        </div>
+      `,
+        });
+
+        console.log("✅ Reset email sent to:", email);
+        res.send("Check your inbox for a reset link.");
+    } catch (err) {
+        console.error("Forgot password error:", err);
+        res.status(500).send("Error sending reset email. Try again later.");
+    }
+});
+
+// ✅ Show the reset password page
+app.get("/reset-password/:token", async (req, res) => {
+    try {
+        const { token } = req.params.token;
+        res.render("reset-password", { token });
+    } catch (err) {
+        console.error("Reset password route error:", err);
         res.status(500).send("Internal Server Error");
     }
 });
+
+
+const sendGridTransporter = nodemailer.createTransport({
+    host: "smtp.sendgrid.net",
+    port: 587,
+    auth: {
+        user: "apikey",
+        pass: process.env.SENDGRID_API_KEY,
+    },
+});
+
+app.get("/test-email", async (req, res) => {
+    try {
+        await sendGridTransporter.sendMail({
+            from: "taxsupport@getfiletax.com",
+            to: "taxsupport@getfiletax.com",
+            subject: "TaxPrep Test Email ✅",
+            html: `<h2>Hello from TaxPrep</h2><p>Your SendGrid setup works!</p>`,
+        });
+        res.send("✅ Test email sent successfully!");
+    } catch (err) {
+        console.error("SendGrid test error:", err);
+        res.status(500).send("❌ Email failed: " + err.message);
+    }
+});
+
+
+
+app.get("/forgot-password", (req, res) => {
+    res.render("forgot-password");
+});
+
+
+// ✅ Handle password reset submission
+app.post("/reset-password/:token", async (req, res) => {
+    try {
+        const { token } = req.params;
+        const { password, confirmPassword } = req.body;
+
+        if (password !== confirmPassword) {
+            return res.status(400).send("Passwords do not match");
+        }
+
+        const db = mongoose.connection.db;
+        const usersCollection = db.collection("users");
+
+        const user = await usersCollection.findOne({ resetToken: token });
+        if (!user) {
+            return res.status(400).send("Invalid or expired token");
+        }
+
+        // Update password (you should hash in real app)
+        await usersCollection.updateOne(
+            { resetToken: token },
+            { $set: { password }, $unset: { resetToken: "" } }
+        );
+
+        res.send("✅ Password updated successfully! You can now log in.");
+    } catch (err) {
+        console.error("Reset password error:", err);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+
+
+
+
+
+app.post("/login", async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        console.log("Login attempt:", email); // debugging line
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            console.log("❌ No user found");
+            return res.status(400).send("No user found with that email");
+        }
+
+        if (user.password !== password) {
+            console.log("❌ Invalid password");
+            return res.status(401).send("Incorrect password");
+        }
+
+        // Save session
+        req.session.user = user;
+        console.log("✅ Login successful for:", email);
+        res.redirect("/dashboard"); // change to your client dashboard route
+    } catch (err) {
+        console.error("🔥 Login error:", err);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
 
 
 // ✅ Connect to MongoDB first
