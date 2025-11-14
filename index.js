@@ -21,11 +21,12 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// =================== Mongoose User Schema ===================
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    rresetToken: String,
+    resetToken: String,
     resetTokenExpiry: Date,
     taxStatus: { type: String, default: "pending" },
 });
@@ -61,6 +62,8 @@ app.post("/signup", async (req, res) => {
 
         const bcrypt = require("bcryptjs");
         const hashedPassword = await bcrypt.hash(password, 10);
+        name,
+        email,
         user.password = hashedPassword;
 
 
@@ -76,7 +79,7 @@ app.post("/signup", async (req, res) => {
         // Redirect to dashboard or login
         res.redirect("/dashboard");
     } catch (err) {
-        console.error("Signup error:", err);
+        console.error("Signup error details:", err.message, err.stack);
         res.status(500).send("Internal Server Error during signup");
     }
 });
