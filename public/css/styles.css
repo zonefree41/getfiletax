@@ -1,26 +1,26 @@
 @media (max-width: 768px) {
-    .card {
-        width: 90%;
-    }
+  .card {
+    width: 90%;
+  }
 
-    h1 {
-        font-size: 1.5rem;
-    }
+  h1 {
+    font-size: 1.5rem;
+  }
 }
 
 /* Responsive styles for smaller screens */
 @media (max-width: 480px) {
-    .container {
-        padding: 10px;
-    }
+  .container {
+    padding: 10px;
+  }
 
-    .card {
-        width: 100%;
-    }
+  .card {
+    width: 100%;
+  }
 
-    h1 {
-        font-size: 1.2rem;
-    }
+  h1 {
+    font-size: 1.2rem;
+  }
 }
 
 footer {
@@ -81,4 +81,41 @@ footer {
   .footer-right {
     margin-bottom: 10px;
   }
+}
+
+/* Stripe-like nav alignment */
+.stripe-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  /* Tight spacing like Stripe */
+  white-space: nowrap;
+}
+
+/* Stripe link style */
+.stripe-nav .nav-link {
+  font-weight: 500;
+  color: #0a2540 !important;
+  padding: 8px 2px !important;
+  transition: color 0.2s ease;
+}
+
+/* Hover effect like Stripe */
+.stripe-nav .nav-link:hover {
+  color: #635bff !important;
+}
+
+/* Stripe-style SIGN UP button */
+.signup-btn {
+  padding: 8px 18px !important;
+  border-radius: 20px;
+  background: #635bff;
+  color: white !important;
+  font-weight: 600;
+  border: none;
+  transition: background 0.2s ease;
+}
+
+.signup-btn:hover {
+  background: #4b44e0;
 }
